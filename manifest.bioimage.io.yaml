@@ -4,8 +4,8 @@ config:
   name: ilastik
   tags:
     - ilastik
-  logo: https://raw.githubusercontent.com/deepimagej/models/master/logos/logo.png
-  icon: https://raw.githubusercontent.com/deepimagej/models/master/logos/icon.png
+  logo: https://github.com/ilastik/ilastik/raw/master/ilastik/ilastik-fist.png
+  icon: https://github.com/ilastik/ilastik/raw/master/ilastik/ilastik-fist.png
   splash_title: ilastik
   splash_subtitle: "What's the ilastik blurb?"
   splash_feature_list:
