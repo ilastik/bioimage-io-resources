@@ -7,7 +7,7 @@ config:
   logo: https://github.com/ilastik/ilastik/raw/master/ilastik/ilastik-fist.png
   icon: https://github.com/ilastik/ilastik/raw/master/ilastik/ilastik-fist.png
   splash_title: ilastik
-  splash_subtitle: "What's the ilastik blurb?"
+  splash_subtitle: "the interactive learning and segmentation toolkit"
   splash_feature_list:
   explore_button_text: "Start Exploring"
   background_image: "static/img/zoo-background.svg"
