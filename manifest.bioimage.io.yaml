@@ -13,7 +13,12 @@ config:
   background_image: "static/img/zoo-background.svg"
   resource_types:
     - model
+    - application
   url_root: https://raw.githubusercontent.com/ilastik/bioimage-io-models/master
+
+application:
+    - id: Ilastik
+      source: https://raw.githubusercontent.com/ilastik/bioimage-io-models/master/src/Ilastik-app.imjoy.html
 
 model:
   - id: UNet2DNucleiBroad
