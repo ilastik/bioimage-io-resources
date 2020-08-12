@@ -52,7 +52,7 @@ model:
       - Ilastik
     download_url: https://github.com/subeeshvasu/hbp-DL-seg-codes/releases/download/0.1.2/2sUNetDA.model.zip
 
-  - id: UNet3DMouseBrainNucleiFgBgProbs                                                                               
+  - id: UNet3DMouseBrainNucleiFgBgProb                                                                               
     source: https://raw.githubusercontent.com/paulhfu/pytorch-3dunet/bioimage-io-3d-nuclei/bioimage-io/UNet3DMouseCorticalCells.model/UNet3DMouseCorticalCells.model.yaml
     links:                                                                                                    
       - Ilastik                                                                                               
