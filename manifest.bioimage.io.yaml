@@ -54,7 +54,6 @@ model:
 
   - id: UNet3DMouseBrainNucleiFgBgProbs                                                                               
     source: https://raw.githubusercontent.com/paulhfu/pytorch-3dunet/bioimage-io-3d-nuclei/bioimage-io/UNet3DMouseCorticalCells.model/UNet3DMouseCorticalCells.model.yaml
-
     links:                                                                                                    
       - Ilastik                                                                                               
     download_url: https://github.com/paulhfu/pytorch-3dunet/releases/download/1.2.11/3DUnetMouseBrainHistoneGFPNuclei.model.zip
