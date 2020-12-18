@@ -51,3 +51,9 @@ model:
     links:
       - Ilastik
     download_url: https://github.com/subeeshvasu/hbp-DL-seg-codes/releases/download/0.1.2/2sUNetDA.model.zip
+    
+  - id: UNet3DKinetochores
+    source: https://raw.githubusercontent.com/kreshuklab/Kinetochores_segmentation/master/Bioimage-io-scripts/UNet3DKinetochores.model.yaml
+    links: 
+      - Ilastik
+    download_url: tbd
