@@ -4,7 +4,7 @@ python:
 
 # command to install dependencies
 install:
-  - pip install git+https://github.com/bioimage-io/python-bioimage-io.git@verify_spec
+  - pip install git+https://github.com/bioimage-io/python-bioimage-io.git
 
 # command to run tests
 script:
