@@ -53,7 +53,7 @@ model:
     download_url: https://github.com/subeeshvasu/hbp-DL-seg-codes/releases/download/0.1.2/2sUNetDA.model.zip
 
   - id: UNetCovidIF
-    source: https://raw.githubusercontent.com/hci-unihd/batchlib/master/misc/models/torch/bioimageio/UNetCovidIf.model.yaml
+    source: https://raw.githubusercontent.com/hci-unihd/batchlib/0.2.0/misc/models/torch/bioimageio/UNetCovidIf.model.yaml 
     links:
         - Ilastik
-    download_url: TODO
+    download_url: https://github.com/hci-unihd/batchlib/releases/download/0.2.0/UNetCovidIf.model.zip
