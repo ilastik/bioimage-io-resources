@@ -35,10 +35,10 @@ model:
     download_url: https://github.com/wolny/pytorch-3dunet/releases/download/1.2.6/UNet3DArabidopsisOvules.model.zip
 
   - id: UNet3DPlatyCellProbs
-    source: https://raw.githubusercontent.com/platybrowser/platybrowser/3711f1c26e5db8c38c3faff4cccb3110560e3c67/segmentation/cells/UNet3DPlatyCellProbs.model/UNet3DPlatyCellProbs.model.yaml
+    source: https://raw.githubusercontent.com/mobie/platybrowser-datasets/1.0.1/segmentation/cells/UNet3DPlatyCellProbs.model/UNet3DPlatyCellProbs.model.yaml
     links:
       - Ilastik
-    download_url: https://github.com/platybrowser/platybrowser/releases/download/1.0.0/UNet3DPlatyCellProbs.model.zip
+    download_url: https://github.com/mobie/platybrowser-datasets/releases/download/1.0.1/UNet3DPlatyCellProbs.model.zip
 
   - id: UNetDA
     source: https://raw.githubusercontent.com/subeeshvasu/hbp-DL-seg-codes/0.1.2/UNetDA.model.yaml
