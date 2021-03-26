@@ -26,6 +26,7 @@ model:
     source: https://raw.githubusercontent.com/bioimage-io/pytorch-bioimage-io/v0.3.0/specs/models/unet2d_nuclei_broad/UNet2DNucleiBroad.model.yaml
     links:
       - Ilastik
+      - imjoy/BioImageIO-Packager
     download_url: https://github.com/bioimage-io/pytorch-bioimage-io/releases/download/v0.3.0/UNet2DNucleiBroad.model.zip
 
   - id: UNet3DArabidopsisOvules
