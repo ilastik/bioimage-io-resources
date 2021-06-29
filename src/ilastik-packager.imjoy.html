@@ -313,32 +313,32 @@ api.export(new ImJoyPlugin())
     <a v-if="modelInfo && modelInfo.source" target="_blank" :href="modelInfo.source">source RDF file</a>
     <br>
     <br>
-    <p style="margin-bottom: 0px;">Click to download by software:</p>
-    <template v-for="weight in spec.config.weights_consumers" :key="weight">
-        <div v-if="weight.consumers" class="chip" v-for="consumer in weight.consumers" @click="download(weight.format)" >
-          <img :src="consumer.icon" alt="consumer.name" class="avatar avatar-sm">
-          {{consumer.name}}
-        </div>
-    </template>
-    <br>
-    <br>
-    <div class="dropdown" v-if="spec && spec.config.weights_consumers">
-      <a href="#" class="btn btn-link dropdown-toggle" tabindex="0">
-         Download by weight format<i class="icon icon-caret"></i>
-      </a>
-      <!-- menu component -->
-      <ul class="menu">
-          <li class="menu-item" v-for="w in spec.config.weights_consumers" :key="w.name" @click="download(format)"><a href="#dropdowns">{{w.name}}</a></li>
-      </ul>
-    </div>
+    <div v-if="spec">
+      <p style="margin-bottom: 0px;">Click to download by software:</p>
+      <template v-for="weight in spec.config.weights_consumers" :key="weight">
+          <div v-if="weight.consumers" class="chip" v-for="consumer in weight.consumers" @click="download(weight.format)" >
+            <img :src="consumer.icon" alt="consumer.name" class="avatar avatar-sm">
+            {{consumer.name}}
+          </div>
+      </template>
+      <br>
+      <br>
+      <div class="dropdown" v-if="spec && spec.config.weights_consumers">
+        <a href="#" class="btn btn-link dropdown-toggle" tabindex="0">
+           Download by weight format<i class="icon icon-caret"></i>
+        </a>
+        <!-- menu component -->
+        <ul class="menu">
+            <li class="menu-item" v-for="w in spec.config.weights_consumers" :key="w.name" @click="download(format)"><a href="#dropdowns">{{w.name}}</a></li>
+        </ul>
+      </div>
 
-    <p v-else-if="!spec">No model selected.</p>
-    <p v-else-if="!spec.weights">No model weights available.</p>
-    <div v-if="loading" class="loading loading-lg"></div>
-    <progress v-if="progress" class="progress" :value="progress" max="100"></progress>
-    <div class="d-block">{{status}}</div>
-    <br>
-    <button class="btn" v-if="format && !loading" @click="download(format)">Download</button>
+      <p v-else-if="!spec">No model selected.</p>
+      <p v-else-if="!spec.weights">No model weights available.</p>
+      <div v-if="loading" class="loading loading-lg"></div>
+      <progress v-if="progress" class="progress" :value="progress" max="100"></progress>
+      <div class="d-block">{{status}}</div>
+    </div>
   </div>
 </window>
 
