@@ -137,13 +137,13 @@ async function downloadModel(rootUrl, spec, weightsFormat, showMessage, showProg
   }
   // deprecate this after v0.4.0
   if(spec.source && spec.source.startsWith('./')){
-    const src = spec.source.split(':').slice(0,1) // e.g. ./mynetwork:UNet
+    const src = spec.source.split(':')[0] // e.g. ./mynetwork:UNet
     files.push(src)
     exportSpec.source = getFileName(src)
   }
   // deprecate this after v0.4.0
   if(spec.dependencies && spec.dependencies.startsWith('./')){
-    const dep = spec.dependencies.split(':').slice(1, 2) // e.g. pip:./requirements.txt
+    const dep = spec.dependencies.split(':')[1] // e.g. pip:./requirements.txt
     files.push(dep)
     exportSpec.dependencies = getFileName(dep)
   }
@@ -151,12 +151,12 @@ async function downloadModel(rootUrl, spec, weightsFormat, showMessage, showProg
   if(spec.weights[weightsFormat]){
     const wformat = spec.weights[weightsFormat];
     if(wformat.architecture && wformat.architecture.startsWith('./')){
-      const src = wformat.architecture.split(':').slice(0,1) // e.g. ./mynetwork:UNet
+      const src = wformat.architecture.split(':')[0] // e.g. ./mynetwork:UNet
       files.push(src)
       exportSpec.weights[weightsFormat].architecture = getFileName(src)
     }
     if(wformat.dependencies && wformat.dependencies.startsWith('./')){
-      const dep = wformat.dependencies.split(':').slice(1, 2) // e.g. pip:./requirements.txt
+      const dep = wformat.dependencies.split(':')[1] // e.g. pip:./requirements.txt
       files.push(dep)
       exportSpec.weights[weightsFormat].dependencies = getFileName(dep)
     }
