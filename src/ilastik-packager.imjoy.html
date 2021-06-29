@@ -315,7 +315,7 @@ api.export(new ImJoyPlugin())
     <div v-if="spec">
       <template v-for="weight in spec.config.weights_consumers" :key="weight">
           <template v-for="consumer in weight.consumers">
-              <button style="margin:3px;" :key="consumer.name" v-if="consumer.name==='ilastik'" class="btn btn-primary">Download ({{weight.name}})</button>
+              <button style="margin:3px;" :key="consumer.name" v-if="consumer.name==='ilastik'" @click="download(weight.format)" class="btn btn-primary">Download ({{weight.name}})</button>
           </template>
       </template>
       <p v-else-if="!spec">No model selected.</p>
