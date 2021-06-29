@@ -1,6 +1,6 @@
 <config lang="json">
 {
-  "name": "Download for ilastik",
+  "name": "ilastik",
   "type": "window",
   "tags": [],
   "ui": "",
@@ -300,7 +300,14 @@ api.export(new ImJoyPlugin())
 
 <window lang="html">
   <div style="text-align: center;" id="app">
-    <p>Model</p>
+       <img src="https://www.ilastik.org/assets/ilastik-logo.png" alt="ilastik">
+    <h1>
+      <a href="https://www.ilastik.org/" target="_blank">
+          ilastik
+      </a>
+    </h1>
+    <p>The interactive learning and segmentation toolkit</p>
+    <h4>You can download and run this model in ilastik:</h4>
     <h2 v-if="modelInfo">{{modelInfo.name}}</h2>
 
     <a v-if="modelInfo && modelInfo.source" target="_blank" :href="modelInfo.source">source RDF file</a>
