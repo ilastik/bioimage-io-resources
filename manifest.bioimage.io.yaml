@@ -29,12 +29,6 @@ model:
       - imjoy/BioImageIO-Packager
     download_url: https://github.com/bioimage-io/pytorch-bioimage-io/releases/download/v0.3.0/UNet2DNucleiBroad.model.zip
 
-  - id: UNet3DArabidopsisOvules
-    source: https://raw.githubusercontent.com/wolny/pytorch-3dunet/37f186c80f4d64b1dab5d165d8c2aae15b5aede1/bioimage-io/UNet3DArabidopsisOvules.model/UNet3DArabidopsisOvules.model.yaml
-    links:
-      - Ilastik
-    download_url: https://github.com/wolny/pytorch-3dunet/releases/download/1.2.6/UNet3DArabidopsisOvules.model.zip
-
   - id: UNet3DPlatyCellProbs
     source: https://raw.githubusercontent.com/mobie/platybrowser-datasets/1.0.1/segmentation/cells/UNet3DPlatyCellProbs.model/UNet3DPlatyCellProbs.model.yaml
     links:
@@ -52,3 +46,27 @@ model:
     links:
       - Ilastik
     download_url: https://github.com/subeeshvasu/hbp-DL-seg-codes/releases/download/0.1.2/2sUNetDA.model.zip
+
+  - id: UNet2DArabidopsisOvules
+    source: https://raw.githubusercontent.com/hci-unihd/plant-seg/master/bioimage-io/UNet2DArabidopsisOvules.model/UNet2DArabidopsisOvules.model.yaml
+    links:
+      - Ilastik
+    download_url: https://github.com/hci-unihd/plant-seg/blob/5ff93ab32749cadd2b53e44ba382af28604a921a/bioimage-io/UNet2DArabidopsisOvules.model/UNet2DArabidopsisOvules.model.zip
+
+  - id: UNet3DArabidopsisOvules
+    source: https://raw.githubusercontent.com/hci-unihd/plant-seg/master/bioimage-io/UNet3DArabidopsisOvules.model/UNet3DArabidopsisOvules.model.yaml
+    links:
+      - Ilastik
+    download_url: https://github.com/hci-unihd/plant-seg/blob/5ff93ab32749cadd2b53e44ba382af28604a921a/bioimage-io/UNet3DArabidopsisOvules.model/UNet3DArabidopsisOvules.model.zip
+
+  - id: UNet3DLateralRoot
+    source: https://raw.githubusercontent.com/hci-unihd/plant-seg/master/bioimage-io/UNet3DLateralRoot.model/UNet3DLateralRoot.model.yaml
+    links:
+      - Ilastik
+    download_url: https://github.com/hci-unihd/plant-seg/blob/5ff93ab32749cadd2b53e44ba382af28604a921a/bioimage-io/UNet3DLateralRoot.model/UNet3DLateralRoot.model.zip
+
+  - id: UNet3DLateralRootNuclei
+    source: https://raw.githubusercontent.com/hci-unihd/plant-seg/master/bioimage-io/UNet3DLateralRootNuclei.model/UNet3DLateralRootNuclei.model.yaml
+    links:
+      - Ilastik
+    download_url: https://github.com/hci-unihd/plant-seg/blob/5ff93ab32749cadd2b53e44ba382af28604a921a/bioimage-io/UNet3DLateralRootNuclei.model/UNet3DLateralRootNuclei.model.zip
