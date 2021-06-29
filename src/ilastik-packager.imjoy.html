@@ -136,7 +136,7 @@ async function downloadModel(rootUrl, spec, weightsFormat, showMessage, showProg
     }
   }
   // deprecate this after v0.4.0
-  if(spec.source && spec.source.startsWith('./')){
+  if(spec.source){
     const src = spec.source.split(':')[0] // e.g. ./mynetwork:UNet
     files.push(src)
     exportSpec.source = getFileName(src)
