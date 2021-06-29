@@ -18,8 +18,8 @@ config:
   url_root: https://raw.githubusercontent.com/ilastik/bioimage-io-models/master
 
 application:
-    - id: Ilastik
-      source: https://raw.githubusercontent.com/ilastik/bioimage-io-models/master/src/Ilastik-app.imjoy.html
+    - id: ilastik
+      source: https://raw.githubusercontent.com/ilastik/bioimage-io-models/master/src/ilastik-packager.imjoy.html
 
 model:
   - id: UNet2DNucleiBroad
