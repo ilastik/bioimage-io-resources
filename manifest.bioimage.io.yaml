@@ -48,25 +48,25 @@ model:
     download_url: https://github.com/subeeshvasu/hbp-DL-seg-codes/releases/download/0.1.2/2sUNetDA.model.zip
 
   - id: UNet2DArabidopsisOvules
-    source: https://github.com/hci-unihd/plant-seg/blob/ff9ebdb890dc57efee3d33933cd5b3a6862fe9ab/bioimage-io/UNet2DArabidopsisOvules.model/UNet2DArabidopsisOvules.model.yaml
+    source: https://raw.githubusercontent.com/hci-unihd/plant-seg/master/bioimage-io/UNet2DArabidopsisOvules.model/UNet2DArabidopsisOvules.model.yaml
     links:
       - Ilastik
     download_url: https://github.com/hci-unihd/plant-seg/blob/5ff93ab32749cadd2b53e44ba382af28604a921a/bioimage-io/UNet2DArabidopsisOvules.model/UNet2DArabidopsisOvules.model.zip
 
   - id: UNet3DArabidopsisOvules
-    source: https://github.com/hci-unihd/plant-seg/blob/ff9ebdb890dc57efee3d33933cd5b3a6862fe9ab/bioimage-io/UNet3DArabidopsisOvules.model/UNet3DArabidopsisOvules.model.yaml
+    source: https://raw.githubusercontent.com/hci-unihd/plant-seg/master/bioimage-io/UNet3DArabidopsisOvules.model/UNet3DArabidopsisOvules.model.yaml
     links:
       - Ilastik
     download_url: https://github.com/hci-unihd/plant-seg/blob/5ff93ab32749cadd2b53e44ba382af28604a921a/bioimage-io/UNet3DArabidopsisOvules.model/UNet3DArabidopsisOvules.model.zip
 
   - id: UNet3DLateralRoot
-    source: https://github.com/hci-unihd/plant-seg/blob/ff9ebdb890dc57efee3d33933cd5b3a6862fe9ab/bioimage-io/UNet3DLateralRoot.model/UNet3DLateralRoot.model.yaml
+    source: https://raw.githubusercontent.com/hci-unihd/plant-seg/master/bioimage-io/UNet3DLateralRoot.model/UNet3DLateralRoot.model.yaml
     links:
       - Ilastik
     download_url: https://github.com/hci-unihd/plant-seg/blob/5ff93ab32749cadd2b53e44ba382af28604a921a/bioimage-io/UNet3DLateralRoot.model/UNet3DLateralRoot.model.zip
 
   - id: UNet3DLateralRootNuclei
-    source: https://github.com/hci-unihd/plant-seg/blob/ff9ebdb890dc57efee3d33933cd5b3a6862fe9ab/bioimage-io/UNet3DLateralRootNuclei.model/UNet3DLateralRootNuclei.model.yaml
+    source: https://raw.githubusercontent.com/hci-unihd/plant-seg/master/bioimage-io/UNet3DLateralRootNuclei.model/UNet3DLateralRootNuclei.model.yaml
     links:
       - Ilastik
     download_url: https://github.com/hci-unihd/plant-seg/blob/5ff93ab32749cadd2b53e44ba382af28604a921a/bioimage-io/UNet3DLateralRootNuclei.model/UNet3DLateralRootNuclei.model.zip
