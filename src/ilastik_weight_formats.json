@@ -25,12 +25,12 @@
     "onnx": {
        "name": "ONNX",
        "description": "Weight formats for ONNX",
-       "consumers": []
+       "consumers": ["ilastik"]
    },
     "pytorch_script": {
        "name": "TorchScript",
        "description": "Weight formats for PyTorch in TorchScript",
-       "consumers": ["ilastik", "deepimagej"]
+       "consumers": ["ilastik"]
    },
     "pytorch_state_dict": {
        "name": "PyTorch",

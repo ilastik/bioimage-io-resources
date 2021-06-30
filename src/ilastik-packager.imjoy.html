@@ -115,8 +115,16 @@ async function fileExists(rootUrl, url){
 
 async function downloadModel(rootUrl, spec, weightsFormat, showMessage, showProgress, showWarning){
   const zip = new JSZip()
-  const exportSpec = JSON.parse(JSON.stringify(spec));
-  
+  const exportSpec = JSON.parse(JSON.stringify(spec, function (key, value) {
+        if (value === Infinity) {
+            return 'inf';
+        }
+        if (value === -Infinity) {
+            return '-inf';
+        }
+        return value;
+    })
+  );
   await showMessage('Downloading files...')
   let files = []
   const weightsURL = spec.weights[weightsFormat].source
@@ -142,7 +150,7 @@ async function downloadModel(rootUrl, spec, weightsFormat, showMessage, showProg
   }
   // deprecate this after v0.4.0
   // TODO: Fix the leading ./ in the python library
-  if(spec.source){ // && spec.source.startsWith('./')
+  if(spec.source && spec.source.includes(':')){
     const src = spec.source.split(':')[0] // e.g. ./mynetwork:UNet
     files.push(src)
     // exportSpec.source = getFileName(src)
@@ -151,7 +159,7 @@ async function downloadModel(rootUrl, spec, weightsFormat, showMessage, showProg
     exportSpec.source = spec.source
   }
   // deprecate this after v0.4.0
-  if(spec.dependencies && spec.dependencies.startsWith('./')){
+  if(spec.dependencies && spec.dependencies.includes(':')){
     const dep = spec.dependencies.split(':')[1] // e.g. pip:./requirements.txt
     files.push(dep)
     exportSpec.dependencies = spec.dependencies
@@ -164,7 +172,7 @@ async function downloadModel(rootUrl, spec, weightsFormat, showMessage, showProg
       files.push(src)
       exportSpec.weights[weightsFormat].architecture = wformat.architecture
     }
-    if(wformat.dependencies && wformat.dependencies.startsWith('./')){
+    if(wformat.dependencies && wformat.dependencies.includes(':')){
       const dep = wformat.dependencies.split(':')[1] // e.g. pip:./requirements.txt
       files.push(dep)
       exportSpec.weights[weightsFormat].dependencies = wformat.dependencies
