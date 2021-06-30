@@ -145,7 +145,10 @@ async function downloadModel(rootUrl, spec, weightsFormat, showMessage, showProg
   if(spec.source){ // && spec.source.startsWith('./')
     const src = spec.source.split(':')[0] // e.g. ./mynetwork:UNet
     files.push(src)
-    exportSpec.source = getFileName(src)
+    // exportSpec.source = getFileName(src)
+    // HACK: leave field in exportSpec unchanged, bioimageio.spec currently only
+    // loads it like this
+    exportSpec.source = spec.source
   }
   // deprecate this after v0.4.0
   if(spec.dependencies && spec.dependencies.startsWith('./')){
