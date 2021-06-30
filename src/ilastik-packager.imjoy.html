@@ -115,8 +115,16 @@ async function fileExists(rootUrl, url){
 
 async function downloadModel(rootUrl, spec, weightsFormat, showMessage, showProgress, showWarning){
   const zip = new JSZip()
-  const exportSpec = JSON.parse(JSON.stringify(spec));
-  
+  const exportSpec = JSON.parse(JSON.stringify(spec, function (key, value) {
+        if (value === Infinity) {
+            return 'inf';
+        }
+        if (value === -Infinity) {
+            return '-inf';
+        }
+        return value;
+    })
+  );
   await showMessage('Downloading files...')
   let files = []
   const weightsURL = spec.weights[weightsFormat].source
