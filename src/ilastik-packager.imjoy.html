@@ -154,7 +154,7 @@ async function downloadModel(rootUrl, spec, weightsFormat, showMessage, showProg
   if(spec.dependencies && spec.dependencies.startsWith('./')){
     const dep = spec.dependencies.split(':')[1] // e.g. pip:./requirements.txt
     files.push(dep)
-    exportSpec.dependencies = getFileName(dep)
+    exportSpec.dependencies = spec.dependencies
   }
   // after 0.4.0, rename source to architecture
   if(spec.weights[weightsFormat]){
@@ -162,12 +162,12 @@ async function downloadModel(rootUrl, spec, weightsFormat, showMessage, showProg
     if(wformat.architecture && wformat.architecture.startsWith('./')){
       const src = wformat.architecture.split(':')[0] // e.g. ./mynetwork:UNet
       files.push(src)
-      exportSpec.weights[weightsFormat].architecture = getFileName(src)
+      exportSpec.weights[weightsFormat].architecture = wformat.architecture
     }
     if(wformat.dependencies && wformat.dependencies.startsWith('./')){
       const dep = wformat.dependencies.split(':')[1] // e.g. pip:./requirements.txt
       files.push(dep)
-      exportSpec.weights[weightsFormat].dependencies = getFileName(dep)
+      exportSpec.weights[weightsFormat].dependencies = wformat.dependencies
     }
   }
   if(spec.documentation && spec.documentation.startsWith('./')){
