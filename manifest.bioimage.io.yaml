@@ -4,8 +4,8 @@ config:
   name: ilastik
   tags:
     - ilastik
-  logo: https://raw.githubusercontent.com/ilastik/bioimage-io-models/master/image/ilastik-fist-icon.png
-  icon: https://raw.githubusercontent.com/ilastik/bioimage-io-models/master/image/ilastik-fist-icon.png
+  logo: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/image/ilastik-fist-icon.png
+  icon: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/image/ilastik-fist-icon.png
   splash_title: ilastik
   splash_subtitle: "the interactive learning and segmentation toolkit"
   splash_feature_list:
@@ -15,11 +15,11 @@ config:
     - model
     - application
   default_type: model
-  url_root: https://raw.githubusercontent.com/ilastik/bioimage-io-models/master
+  url_root: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main
 
 application:
     - id: ilastik
-      source: https://raw.githubusercontent.com/ilastik/bioimage-io-models/master/src/ilastik-packager.imjoy.html
+      source: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/src/ilastik-packager.imjoy.html
 
 model:
   - id: UNet2DNucleiBroad
