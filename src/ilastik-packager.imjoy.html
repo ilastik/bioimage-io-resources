@@ -178,33 +178,24 @@ async function downloadModel(rootUrl, spec, weightsFormat, showMessage, showProg
       exportSpec.weights[weightsFormat].dependencies = wformat.dependencies
     }
   }
-  if(spec.documentation && spec.documentation.startsWith('./')){
+  if(spec.documentation && !spec.documentation.startsWith('http')){
     files.push(spec.documentation)
     exportSpec.documentation = getFileName(spec.documentation)
   }
+  for(let key of ['test_inputs', 'test_outputs', 'sample_inputs', 'sample_outputs']){
+      if(spec[key] && Array.isArray(spec[key])){
+        for(let i=0;i<spec[key].length;i++){
+          if(await fileExists(rootUrl, spec[key][i])){
+              files.push(spec[key][i])
+              exportSpec[key][i] = getFileName(spec[key][i])
+          }
+          else{
+              showWarning("File not found: " + spec[key][i])
+          }
+        }
+      }
+  }
 
-  if(spec.test_inputs && Array.isArray(spec.test_inputs)){
-    for(let i=0;i<spec.test_inputs.length;i++){
-      if(await fileExists(rootUrl, spec.test_inputs[i])){
-          files.push(spec.test_inputs[i])
-          exportSpec.test_inputs[i] = getFileName(spec.test_inputs[i])
-      }
-      else{
-          showWarning("File not found: " + spec.test_inputs[i])
-      }
-    }
-  }
-  if(spec.test_outputs && Array.isArray(spec.test_outputs)){
-    for(let i=0;i<spec.test_outputs.length;i++){
-      if(await fileExists(rootUrl, spec.test_outputs[i])){
-          files.push(spec.test_outputs[i])
-          exportSpec.test_outputs[i] = getFileName(spec.test_outputs[i])
-      }
-      else{
-          showWarning("File not found: " + spec.test_outputs[i])
-      }
-    }
-  }
   if(spec.covers && Array.isArray(spec.covers)){
     files = files.concat(spec.covers)
     for(let i=0;i<spec.covers.length;i++){
