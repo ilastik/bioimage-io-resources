@@ -19,7 +19,7 @@ config:
 
 application:
     - id: ilastik
-      source: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/src/ilastik-packager.imjoy.html
+      source: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/src/ilastik-app.imjoy.html
 
 model:
   - id: UNet2DNucleiBroad
