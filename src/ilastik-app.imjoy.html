@@ -4,7 +4,7 @@
   "type": "window",
   "tags": [],
   "ui": "",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "api_version": "0.1.7",
   "description": "Export BioImage.IO model packages for ilastik from a model description file",
   "icon": "https://raw.githubusercontent.com/ilastik/bioimage-io-models/master/image/ilastik-fist-icon.png",
@@ -227,7 +227,7 @@ async function downloadModel(rootUrl, spec, weightsFormat, showMessage, showProg
   const zipBlob = await zip.generateAsync({ type:"blob",
     compression: "DEFLATE",
     compressionOptions: {
-        level: 9
+        level: 1
     }},
     (mdata)=>{
       showProgress(mdata.percent)
@@ -357,7 +357,7 @@ api.export(new ImJoyPlugin())
       <p v-else-if="!spec">No model selected.</p>
       <p v-else-if="!spec.weights">No model weights available.</p>
       <div v-if="loading" class="loading loading-lg"></div>
-      <progress v-if="progress" class="progress" :value="progress" max="100"></progress>
+      <progress v-if="progress" id="progressbar" class="progress" :value="progress" max="100"></progress>
       <div class="d-block">{{status}}</div>
        <template v-for="weight in spec.config.weights_consumers" :key="weight">
           <template v-for="consumer in weight.consumers">
@@ -370,6 +370,11 @@ api.export(new ImJoyPlugin())
 </window>
 
 <style lang="css">
+#progressbar {
+  position: absolute;
+  bottom: 6px;
+  left: 0px;  
+}
 .form-group {
   margin: 20px;
 }
