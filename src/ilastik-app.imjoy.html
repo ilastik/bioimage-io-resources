@@ -252,6 +252,7 @@ const app = new Vue({
     spec: null,
     rootUrl: null,
     warnings: [],
+    weightsConsumers: []
   },
   methods: {
     async init(weight_formats_spec){
@@ -264,8 +265,7 @@ const app = new Vue({
       this.spec = jsyaml.load(await response.text())
 
       this.modelInfo.name = this.spec.name
-      this.spec.config = this.spec.config || {}
-      this.spec.config.weights_consumers = Object.keys(this.spec.weights).map((k)=>{
+      this.weightsConsumers = Object.keys(this.spec.weights).map((k)=>{
           const wformat = weight_formats_spec.weight_formats[k]
           if(wformat)
             return {"format": k, "name": wformat.name, "consumers": wformat.consumers.map((k)=>weight_formats_spec.consumers[k])}
@@ -362,7 +362,7 @@ api.export(new ImJoyPlugin())
       <div v-if="loading" class="loading loading-lg"></div>
       <progress v-if="progress" id="progressbar" class="progress" :value="progress" max="100"></progress>
       <div class="d-block">{{status}}</div>
-       <template v-for="weight in spec.config.weights_consumers" :key="weight">
+       <template v-for="weight in weightsConsumers" :key="weight">
           <template v-for="consumer in weight.consumers">
               <button style="margin:3px;" :key="consumer.name" v-if="consumer && consumer.name==='ilastik'" @click="download(weight.format)" class="btn btn-primary">Download ({{weight.name}})</button>
           </template>
