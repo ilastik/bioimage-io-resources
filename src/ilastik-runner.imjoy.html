@@ -48,7 +48,7 @@ class ImJoyPlugin {
             window.open(model_info.download_url);
         }
         window.loadImage = async function(){
-            const ret = await api.confirm('Would you like to an image file with the BioEngine? Otherwise, an example image will be used. Note: you need an image with size 512x512.')
+            const ret = await api.confirm('Would you like to select a local image file to run the model? Otherwise, an example image will be used. Note: you need an image with size 512x512.')
             if(ret){
                 document.getElementById('upload_file').click()
             }
