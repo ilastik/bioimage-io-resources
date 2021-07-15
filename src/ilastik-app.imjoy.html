@@ -303,7 +303,7 @@ const app = new Vue({
     async testRun(){
         try{
             this.loading = true;
-            await api.showDialog({src: 'https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/src/Ilastik-app.imjoy.html'});
+            await api.showDialog({src: 'https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/src/ilastik-runner.imjoy.html'});
         } catch(e){
             await api.alert(`Failed to run the model, error: ${e}`)
         }
