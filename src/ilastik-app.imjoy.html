@@ -123,6 +123,12 @@ async function downloadModel(rootUrl, spec, weightsFormat, showMessage, showProg
         return value;
     })
   );
+  // Move id to config for now
+  exportSpec.config = exportSpec.config || {}
+  if(exportSpec.id){
+    exportSpec.config._id = exportSpec.id
+    delete exportSpec.id
+  }
   await showMessage('Downloading files...')
   let files = []
   const weightsURL = spec.weights[weightsFormat].source
