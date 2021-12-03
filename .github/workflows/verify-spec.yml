@@ -15,4 +15,4 @@ jobs:
       - name: install pkg
         run: pip install git+https://github.com/bioimage-io/spec-bioimage-io.git
       - name: verify-spec
-        run: python -m bioimageio.spec verify-bioimageio-manifest manifest.bioimage.io.yaml
+        run: bioimageio validate manifest.bioimage.io.yaml
