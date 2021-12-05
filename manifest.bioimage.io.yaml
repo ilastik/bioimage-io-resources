@@ -12,7 +12,6 @@ config:
   explore_button_text: "Start Exploring"
   background_image: "static/img/zoo-background.svg"
   resource_types:
-    - model
     - application
   default_type: model
   url_root: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main
@@ -20,23 +19,3 @@ config:
 application:
     - id: ilastik
       source: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/src/ilastik-app.imjoy.html
-
-model:
-  - id: UNet2DNucleiBroad
-    source: https://raw.githubusercontent.com/bioimage-io/pytorch-bioimage-io/v0.3.0/specs/models/unet2d_nuclei_broad/UNet2DNucleiBroad.model.yaml
-    links:
-      - Ilastik
-      - imjoy/BioImageIO-Packager
-    download_url: https://github.com/bioimage-io/pytorch-bioimage-io/releases/download/v0.3.0/UNet2DNucleiBroad.model.zip
-
-  - id: UNetDA
-    source: https://raw.githubusercontent.com/subeeshvasu/hbp-DL-seg-codes/0.1.2/UNetDA.model.yaml
-    links:
-      - Ilastik
-    download_url: https://github.com/subeeshvasu/hbp-DL-seg-codes/releases/download/0.1.2/UNetDA.model.zip
-
-  - id: 2sUNetDA
-    source: https://raw.githubusercontent.com/subeeshvasu/hbp-DL-seg-codes/0.1.2/2sUNetDA.model.yaml
-    links:
-      - Ilastik
-    download_url: https://github.com/subeeshvasu/hbp-DL-seg-codes/releases/download/0.1.2/2sUNetDA.model.zip
