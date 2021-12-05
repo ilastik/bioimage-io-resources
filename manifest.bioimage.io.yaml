@@ -51,11 +51,7 @@ dataset:
     covers: [cover0.jpg]
     description: Subset of the nucleus segmentation training data from the 2018 Kaggle
       Data Science Bowl.
-    documentation: "\n# Nucleus Segmentation Training Data\n\nTraning data for instance
-      segmentation of nuclei. This data is a subset of the data from the [2018 Kaggle
-      Data Science Bowl dataset\nfor nucleus segmentation](https://bioimage.io/#/?type=application&id=notebook_stardist_2d_zerocostdl4mic).\nThis
-      subset has been used for training the [StarDist](https://github.com/stardist/stardist)
-      nucleus segmentation model and other nucleus segmentation models on bioimagei.io."
+    documentation: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/dataset_src/dsb.md
     license: CC0-1.0
     name: DSB Nucleus Segmentation Training Data
     source: https://github.com/stardist/stardist/releases/download/0.1.0/dsb2018.zip
