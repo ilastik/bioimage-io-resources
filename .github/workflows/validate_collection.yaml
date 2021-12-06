@@ -1,4 +1,4 @@
-name: verify-spec
+name: validate collection
 
 on:
   push:
@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-      - name: install pkg
+      - name: install bioimageio.spec
         run: pip install bioimageio.spec
-      - name: verify-spec
-        run: bioimageio validate manifest.bioimage.io.yaml
+      - name: validate collection
+        run: bioimageio validate collection.yaml
