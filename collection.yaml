@@ -1,0 +1,21 @@
+format_version: 0.2.0
+config:
+  id: ilastik
+  name: ilastik
+  tags:
+    - ilastik
+  logo: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/image/ilastik-fist-icon.png
+  icon: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/image/ilastik-fist-icon.png
+  splash_title: ilastik
+  splash_subtitle: "the interactive learning and segmentation toolkit"
+  splash_feature_list:
+  explore_button_text: "Start Exploring"
+  background_image: "static/img/zoo-background.svg"
+  resource_types:
+    - application
+  default_type: model
+  url_root: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main
+
+application:
+    - id: ilastik
+      source: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/src/ilastik-app.imjoy.html
