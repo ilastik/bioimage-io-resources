@@ -79,7 +79,7 @@ dataset:
     source: https://cremi.org/
     tags: [electron-microscopy, brain, neurons, instance-segmentation, cremi-challenge, 3D]
     type: dataset
-  - if: stradist_dsb_training_data
+  - id: stradist_dsb_training_data
     authors:
     - {name: Constantin Pape}
     cite:
