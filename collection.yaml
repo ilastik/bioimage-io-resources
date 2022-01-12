@@ -47,7 +47,7 @@ config:  # todo: clean up config (which of these fields are still used?)
 
 application:
     - id: ilastik
-      source: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/src/ilastik-app.imjoy.html
+      rdf_source: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/src/ilastik-app.imjoy.html
 
 dataset:
   - id: covid_if_training_data
