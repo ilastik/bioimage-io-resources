@@ -25,7 +25,7 @@ maintainers:
     orcid: "0000-0001-6562-7187"
 
 cite:
-  - text: "Berg, S., Kutra, D., Kroeger, T. et al. ilastik: interactive machine learning for (bio)image analysis. Nat Methods 16, 1226–1232 (2019)."
+  - text: "Berg, S., Kutra, D., Kroeger, T. et al. ilastik: interactive machine learning for (bio)image analysis. Nat Methods 16, 1226-1232 (2019)."
     doi: 10.1038/s41592-019-0582-9
 
 config:  # todo: clean up config (which of these fields are still used?)
