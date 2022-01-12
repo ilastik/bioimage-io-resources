@@ -1,4 +1,4 @@
-format_version: 0.2.1
+format_version: 0.2.2
 type: collection
 name: Ilastik Collection
 tags: [ilastik, bioimage.io]
@@ -45,11 +45,15 @@ config:  # todo: clean up config (which of these fields are still used?)
   default_type: model
   url_root: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main
 
-application:
-    - id: ilastik
-      source: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/src/ilastik-app.imjoy.html
-
-dataset:
+collection:
+  - id: ilastik
+    source: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/src/ilastik-app.imjoy.html
+    type: application
+    authors:
+      - name: ilastik Team
+    maintainers:
+      - name: ilastik Team
+        github_user: ilastik
   - id: covid_if_training_data
     authors:
     - {name: Constantin Pape}
