@@ -47,7 +47,13 @@ config:  # todo: clean up config (which of these fields are still used?)
 
 collection:
   - id: ilastik
-    rdf_source: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/src/ilastik-app.imjoy.html
+    source: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/src/ilastik-app.imjoy.html
+    type: application
+    authors:
+      - name: ilastik Team
+    maintainers:
+      - name: ilastik Team
+        github_user: ilastik
   - id: covid_if_training_data
     authors:
     - {name: Constantin Pape}
