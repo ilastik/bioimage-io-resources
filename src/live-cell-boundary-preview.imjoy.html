@@ -3,8 +3,7 @@
   "name": "live-cell-boundary-model",
   "type": "web-worker",
   "tags": [],
-  "ui": "",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "cover": "",
   "description": "Run the live cell boundary model via the BioEngine",
   "icon": "https://raw.githubusercontent.com/ilastik/bioimage-io-models/07147313b07f6842f0b9890ee7a79e47c44258e5/image/circular-play-button.png",
@@ -105,17 +104,10 @@ from imjoy import api
 import io
 from PIL import Image
 import numpy as np
-from js import fetch
-from pyotritonclient import get_config, execute_model
+from pyotritonclient import execute
 import base64
 import pyodide
 from io import BytesIO
-    
-async def fetch_image(url, name=None, grayscale=False, size=None):
-    response = await fetch(url)
-    bytes = await response.arrayBuffer()
-    bytes = bytes.to_py()
-    return read_image(bytes, name=name, grayscale=grayscale, size=size)
 
 def read_image(bytes, name=None, grayscale=False, size=None):
     buffer = io.BytesIO(bytes)
@@ -146,11 +138,13 @@ class ImJoyPlugin():
 
     async def run_inference(self, file_bytes, file_name):
         input_image = read_image(file_bytes.tobytes(), name=file_name)
+        if input_image.ndim == 2:
+            input_image = input_image[None, :, :]
         # run inference
-        results = await execute_model([input_image[None, :, :].astype('float32'), {}],
-                                      server_url='https://ai.imjoy.io/triton',
-                                      model_name='bioimageio-live-cell-segmentation-boundary-model',
-                                      decode_bytes=True)
+        results = await execute([input_image.astype('float32'), {}],
+                                  server_url='https://ai.imjoy.io/triton',
+                                  model_name='bioimageio-live-cell-segmentation-boundary-model',
+                                  decode_bytes=True)
         mask = results['output_0'][1, :, :] * 255
         return {"mask": encode_image(mask.astype('uint8'))}
 
