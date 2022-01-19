@@ -1,6 +1,6 @@
 <config lang="json">
 {
-  "name": "live-cell-boundary-preview",
+  "name": "live-cell-boundary-model",
   "type": "web-worker",
   "tags": [],
   "ui": "",
@@ -34,14 +34,14 @@ class ImJoyPlugin {
       const plugin_source = await api.getAttachment("inference-plugin")
       this.inferencePlugin = await api.loadPlugin({src: plugin_source})
         const self = this;
-        const viewer = await api.createWindow({src: "https://kaibu.org/#/app", name: "Kaibu"})
+        const viewer = await api.createWindow({src: "https://kaibu.org/#/app", name: "Kaibu", fullscreen: true})
         await viewer.add_widget({
             "_rintf": true,
             "name": "Control",
             "type": "form",
             "fields": [
                 {
-                    "html": "<div class='box'><article class='media'><div class='media-content'><div class='content'><p><strong class='has-text-info'>Live Cell Segmentation Boundary Model</strong><br>You can load your own image (in grayscale, e.g. tif format) to try the model. You can also download this <a href='https://zenodo.org/api/files/a6d477fe-9412-4064-b7e6-67f057fec920/sample_input_0.tif' target='_blank'>example image</a>.</p><img src='https://zenodo.org/api/files/a6d477fe-9412-4064-b7e6-67f057fec920/cover.png' alt='Image'></div>"
+                    "html": "<div class='box'><article class='media'><div class='media-content'><div class='content'><p><strong class='has-text-info'>Live Cell Segmentation Boundary Model</strong><br>Try model with your own image or this <a href='https://zenodo.org/api/files/a6d477fe-9412-4064-b7e6-67f057fec920/sample_input_0.tif' target='_blank'>example image</a>.</p><img src='https://zenodo.org/api/files/a6d477fe-9412-4064-b7e6-67f057fec920/cover.png' alt='Image'></div>"
                 },
                 {
                   "type": "files",
