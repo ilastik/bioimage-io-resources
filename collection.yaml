@@ -54,6 +54,15 @@ collection:
     maintainers:
       - name: ilastik Team
         github_user: ilastik
+  - id: live-cell-boundary-model
+    source: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/src/live-cell-boundary-preview.imjoy.html
+    type: application
+    authors:
+      - name: ImJoy Team
+      - name: ilastik Team
+    maintainers:
+      - name: ilastik Team
+        github_user: ilastik
   - id: covid_if_training_data
     authors:
     - {name: Constantin Pape}
