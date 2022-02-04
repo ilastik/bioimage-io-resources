@@ -6,7 +6,7 @@ on:
       pending_matrix:
         description: 'json encoded gh matrix of pending validations for new or updated resources'
         required: true
-        default: '{"resource_id": "rid", "version_id": "vid"}'
+        default: '{"include": [{"resource_id": "rid", "version_id": "vid"}]}'
         type: string
 
 jobs:
