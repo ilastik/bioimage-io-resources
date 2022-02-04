@@ -13,7 +13,5 @@ jobs:
   validate-bioimageio-resources:
     runs-on: ubuntu-latest
     steps:
-    - name: client payload
-      run: 'echo ${{ github.event.client_payload.pending_matrix }} '
     - name: through inputs
       run: 'echo ${{ github.event.inputs.pending_matrix }} '
