@@ -12,6 +12,10 @@ on:
 jobs:
   validate-bioimageio-resources:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(github.events.inputs.pending_matrix) }}
+
     steps:
-    - name: through inputs
-      run: 'echo ${{ github.event.inputs.pending_matrix }} '
+    - name: test ${{ matrix.resource_id }} ${{ matrix.version_id }}
+      run: echo ::warning ::not yet implemented
