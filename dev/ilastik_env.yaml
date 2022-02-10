@@ -4,4 +4,6 @@ channels:
   - ilastik-forge
   - conda-forge
 dependencies:
-  - python=3.8
+  - python=3.7
+  - pytorch=1.9
+  - onnxruntime
