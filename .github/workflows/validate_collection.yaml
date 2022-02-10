@@ -1,4 +1,4 @@
-name: validate collection
+name: validate ilastik collection
 
 on:
   push:
