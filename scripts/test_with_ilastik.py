@@ -19,7 +19,7 @@ def write_summary(s: dict, p: Path):
 
 
 def main(
-    dist: Path, resource_id: str, version_id: str, rdf_dir: Path = Path(__file__).parent / "../bioimageio-gh-pages/rdfs"
+    dist: Path, resource_id: str, version_id: str = "**", rdf_dir: Path = Path(__file__).parent / "../bioimageio-gh-pages/rdfs"
 ):
     """ preliminary ilastik check
 
@@ -27,26 +27,26 @@ def main(
 
     """
     dist.mkdir(parents=True, exist_ok=True)
-    rdf_path = rdf_dir / resource_id / version_id / "rdf.yaml"
-    try:
-        rd: Optional[ResourceDescription] = load_resource_description(rdf_path)
-    except Exception as e:
-        error = f"Unable to load rdf: {e}"
-    else:
-        error = None
+    for rdf_path in rdf_dir.glob(f"{resource_id}/{version_id}/rdf.yaml"):
+        try:
+            rd: Optional[ResourceDescription] = load_resource_description(rdf_path)
+        except Exception as e:
+            error = f"Unable to load rdf: {e}"
+        else:
+            error = None
 
-    test_name = "reproduce test outputs with ilastik <todo version>"
-    if error is None:
-        for weight_format in ["onnx", "torchscript", "pytorch_state_dict"]:
-            if error is not None:
-                if weight_format in rd.weights:
-                    summary = test_model(rd, weight_format=weight_format)
-                    summary["name"] = f"{test_name} using {weight_format} weights"
-                    write_summary(summary, dist / resource_id / version_id / f"test_summary_{weight_format}.yaml")
-    else:
-        write_summary(
-            dict(name=test_name, error=error, status="failed"), dist / resource_id / version_id / f"test_summary.yaml"
-        )
+        test_name = "reproduce test outputs with ilastik <todo version>"
+        if error is None:
+            for weight_format in ["onnx", "torchscript", "pytorch_state_dict"]:
+                if error is not None:
+                    if weight_format in rd.weights:
+                        summary = test_model(rd, weight_format=weight_format)
+                        summary["name"] = f"{test_name} using {weight_format} weights"
+                        write_summary(summary, dist / resource_id / version_id / f"test_summary_{weight_format}.yaml")
+        else:
+            write_summary(
+                dict(name=test_name, error=error, status="failed"), dist / resource_id / version_id / f"test_summary.yaml"
+            )
 
 
 if __name__ == "__main__":
