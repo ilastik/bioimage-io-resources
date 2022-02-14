@@ -12,7 +12,7 @@ on:
         type: string
 
 jobs:
-  test-bioimageio-resources:
+  test:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false

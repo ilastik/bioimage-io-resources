@@ -15,7 +15,10 @@ def write_summary(s: dict, p: Path):
 
 
 def main(
-    dist: Path, resource_id: str, version_id: str = "**", rdf_dir: Path = Path(__file__).parent / "../bioimageio-gh-pages/rdfs"
+    dist: Path,
+    resource_id: str,
+    version_id: str = "**",
+    rdf_dir: Path = Path(__file__).parent / "../bioimageio-gh-pages/rdfs",
 ):
     """ preliminary ilastik check
 
@@ -30,13 +33,13 @@ def main(
         except Exception as e:
             error = f"Unable to load rdf: {e}"
             write_summary(
-                dict(name=test_name, error=error, status="failed"), dist / resource_id / version_id / f"test_summary.yaml"
+                dict(name=test_name, error=error, status="failed"),
+                dist / resource_id / version_id / f"test_summary.yaml",
             )
             continue
 
         if rd.type != "model":
-            write_summary(
-                dict(status="skipped"), dist / resource_id / version_id / f"test_summary.yaml"
+            write_summary(dict(status="skipped"), dist / resource_id / version_id / f"test_summary.yaml")
             continue
 
         assert isinstance(rd, Model)
