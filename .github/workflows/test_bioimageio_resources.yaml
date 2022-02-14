@@ -14,6 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo '${{ github.events.inputs.pending_matrix }}'
+      - run: echo '${{ github.events.inputs.pending-matrix }}'
+      - run: echo '${{ inputs.pending_matrix }}'
+      - run: echo '${{ inputs.pending-matrix }}'
 
 #  validate-bioimageio-resources:
 #    runs-on: ubuntu-latest
