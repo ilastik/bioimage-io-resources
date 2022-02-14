@@ -1,16 +1,12 @@
 from pathlib import Path
+from typing import Optional
 
 import typer
 
 from bioimageio.core import load_resource_description
-from bioimageio.core.resource_io.nodes import ResourceDescription
+from bioimageio.core.resource_io.nodes import Model, ResourceDescription
 from bioimageio.core.resource_tests import test_model
 from bioimageio.spec.shared import yaml
-
-try:
-    from typing import Optional, get_args
-except ImportError:
-    from typing_extensions import get_args  # type: ignore
 
 
 def write_summary(s: dict, p: Path):
@@ -28,25 +24,27 @@ def main(
     """
     dist.mkdir(parents=True, exist_ok=True)
     for rdf_path in rdf_dir.glob(f"{resource_id}/{version_id}/rdf.yaml"):
+        test_name = "reproduce test outputs with ilastik <todo version>"
         try:
             rd: Optional[ResourceDescription] = load_resource_description(rdf_path)
         except Exception as e:
             error = f"Unable to load rdf: {e}"
-        else:
-            error = None
-
-        test_name = "reproduce test outputs with ilastik <todo version>"
-        if error is None:
-            for weight_format in ["onnx", "torchscript", "pytorch_state_dict"]:
-                if error is not None:
-                    if weight_format in rd.weights:
-                        summary = test_model(rd, weight_format=weight_format)
-                        summary["name"] = f"{test_name} using {weight_format} weights"
-                        write_summary(summary, dist / resource_id / version_id / f"test_summary_{weight_format}.yaml")
-        else:
             write_summary(
                 dict(name=test_name, error=error, status="failed"), dist / resource_id / version_id / f"test_summary.yaml"
             )
+            continue
+
+        if rd.type != "model":
+            write_summary(
+                dict(status="skipped"), dist / resource_id / version_id / f"test_summary.yaml"
+            continue
+
+        assert isinstance(rd, Model)
+        for weight_format in ["onnx", "torchscript", "pytorch_state_dict"]:
+            if weight_format in rd.weights:
+                summary = test_model(rd, weight_format=weight_format)
+                summary["name"] = f"{test_name} using {weight_format} weights"
+                write_summary(summary, dist / resource_id / version_id / f"test_summary_{weight_format}.yaml")
 
 
 if __name__ == "__main__":
