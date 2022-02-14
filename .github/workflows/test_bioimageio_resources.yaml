@@ -1,6 +1,8 @@
 name: test BioImage.IO resources  # for compatibility with ilastik
 
-on: 
+concurrency: test-resources
+
+on:
   workflow_dispatch:
     inputs:
       pending_matrix:
