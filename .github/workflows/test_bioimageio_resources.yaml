@@ -36,7 +36,7 @@ jobs:
     - name: install script deps  # todo: use conda step above
       run: pip install typer bioimageio.core onnxruntime torch
     - name: test with ilastik
-      run: python scripts/test_with_ilastik.py dist ${{ matrix.resource_id }} ${{ matrix.version_id }}
+      run: python scripts/test_with_ilastik.py dist '${{ matrix.resource_id }}' --version-id '${{ matrix.version_id }}'
     - name: Deploy test summaries to gh-pages 🚀
       uses: JamesIves/github-pages-deploy-action@v4.2.3
       with:
