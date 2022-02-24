@@ -1,3 +1,4 @@
+import traceback
 from pathlib import Path
 from typing import Optional
 
@@ -59,7 +60,11 @@ def write_test_summaries(rdf_dir: Path, resource_id: str, version_id: str, summa
 
         # write test summary for each weight format
         for weight_format in weight_formats:
-            summary = test_model(rdf_path, weight_format=weight_format)
+            try:
+                summary = test_model(rdf_path, weight_format=weight_format)
+            except Exception as e:
+                summary = dict(error=str(e), traceback=traceback.format_tb(e.__traceback__))
+
             summary["name"] = f"{test_name} using {weight_format} weights"
             write_summary(summaries_dir / rd_id / f"test_summary_{weight_format}.yaml", **summary)
 
