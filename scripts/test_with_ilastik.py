@@ -45,10 +45,10 @@ def write_test_summaries(rdf_dir: Path, resource_id: str, version_id: str, summa
             status = "skipped"
             reason = "not a model RDF"
 
-        weight_formats = list(rdf.get("weights"))
-        if not weight_formats:
+        weight_formats = list(rdf.get("weights", []))
+        if not isinstance(weight_formats, list) or not weight_formats:
             status = "failed"
-            error = f"Missing weight formats for {rd_id}"
+            error = f"Missing/invalid weight formats for {rd_id}"
 
         if status:
             # write single test summary
