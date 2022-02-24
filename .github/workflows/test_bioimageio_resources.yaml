@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       pending_matrix:
-        description: 'json encoded gh matrix of pending validations for new or updated resources'
+        description: 'json encoded gh matrix of pending validations for new or updated resources (default: test on all resources)'
         required: true
         default: '{"include": [{"resource_id": "**", "version_id": "**"}]}'
         type: string
@@ -14,9 +14,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJson(github.event.inputs.pending_matrix) }}
+#    strategy:
+#      fail-fast: false
+#      matrix: ${{ fromJson(github.event.inputs.pending_matrix) }}
 
     steps:
     - uses: actions/checkout@v2
@@ -36,7 +36,8 @@ jobs:
     - name: install script deps  # todo: use conda step above
       run: pip install typer bioimageio.core onnxruntime torch
     - name: test with ilastik
-      run: python scripts/test_with_ilastik.py dist '${{ matrix.resource_id }}' --version-id '${{ matrix.version_id }}'
+#      run: python scripts/test_with_ilastik.py dist '${{ matrix.resource_id }}' --version-id '${{ matrix.version_id }}'
+      run: python scripts/test_many_with_ilastik.py dist '${{ github.event.inputs.pending_matrix }}'
     - name: Deploy test summaries to gh-pages 🚀
       uses: JamesIves/github-pages-deploy-action@v4.2.3
       with:

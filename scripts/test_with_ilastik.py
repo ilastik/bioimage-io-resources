@@ -11,19 +11,7 @@ def write_summary(s: dict, p: Path):
     yaml.dump(s, p)
 
 
-def main(
-    dist: Path,
-    resource_id: str,
-    version_id: str = "**",
-    rdf_dir: Path = Path(__file__).parent / "../bioimageio-gh-pages/rdfs",
-):
-    """ preliminary ilastik check
-
-    only checks if test outputs are reproduced and onnx, torchscript, or pytorch_state_dict weights are available.
-
-    """
-    summaries_dir = dist / "test_summaries"
-    summaries_dir.mkdir(parents=True, exist_ok=True)
+def write_test_summaries(rdf_dir: Path, resource_id: str, version_id: str, summaries_dir: Path):
     for rdf_path in rdf_dir.glob(f"{resource_id}/{version_id}/rdf.yaml"):
         test_name = "reproduce test outputs with ilastik <todo version> (draft)"
         error = None
@@ -61,6 +49,22 @@ def main(
             summary = test_model(rdf_path, weight_format=weight_format)
             summary["name"] = f"{test_name} using {weight_format} weights"
             write_summary(summary, summaries_dir / rd_id / f"test_summary_{weight_format}.yaml")
+
+
+def main(
+    dist: Path,
+    resource_id: str,
+    version_id: str = "**",
+    rdf_dir: Path = Path(__file__).parent / "../bioimageio-gh-pages/rdfs",
+):
+    """ preliminary ilastik check
+
+    only checks if test outputs are reproduced for onnx, torchscript, or pytorch_state_dict weights.
+
+    """
+    summaries_dir = dist / "test_summaries"
+    summaries_dir.mkdir(parents=True, exist_ok=True)
+    write_test_summaries(rdf_dir, resource_id, version_id, summaries_dir)
 
 
 if __name__ == "__main__":
