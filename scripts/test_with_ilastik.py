@@ -1,10 +1,7 @@
 from pathlib import Path
-from typing import Optional
 
 import typer
 
-from bioimageio.core import load_resource_description
-from bioimageio.core.resource_io.nodes import Model, ResourceDescription
 from bioimageio.core.resource_tests import test_model
 from bioimageio.spec.shared import yaml
 
@@ -25,29 +22,45 @@ def main(
     only checks if test outputs are reproduced and onnx, torchscript, or pytorch_state_dict weights are available.
 
     """
-    dist.mkdir(parents=True, exist_ok=True)
+    summaries_dir = dist / "test_summaries"
+    summaries_dir.mkdir(parents=True, exist_ok=True)
     for rdf_path in rdf_dir.glob(f"{resource_id}/{version_id}/rdf.yaml"):
-        test_name = "reproduce test outputs with ilastik <todo version>"
+        test_name = "reproduce test outputs with ilastik <todo version> (draft)"
+        error = None
+        status = None
+        reason = None
         try:
-            rd: Optional[ResourceDescription] = load_resource_description(rdf_path)
+            rdf = yaml.load(rdf_path)
         except Exception as e:
             error = f"Unable to load rdf: {e}"
-            write_summary(
-                dict(name=test_name, error=error, status="failed"),
-                dist / resource_id / version_id / f"test_summary.yaml",
+            status = "failed"
+            rdf = {}
+
+        rd_id = rdf.get("id")
+        if rd_id is None or not isinstance(rd_id, str):
+            print(
+                f"::warning file=scripts/test_with_ilastik.py,line=40,endline=44,title=Invalid RDF::"
+                f"Missing/invalid 'id' in rdf {str(rdf_path.relative_to(rdf_dir).parent)}"
             )
             continue
 
-        if rd.type != "model":
-            write_summary(dict(status="skipped"), dist / resource_id / version_id / f"test_summary.yaml")
+        if rdf.get("type") != "model":
+            status = "skipped"
+            reason = "not a model RDF"
+
+        if status:
+            # write single test summary
+            write_summary(
+                dict(status=status, error=error, reason="error" if error else reason),
+                summaries_dir / rd_id / f"test_summary.yaml",
+            )
             continue
 
-        assert isinstance(rd, Model)
+        # write test summary for each weight format
         for weight_format in ["onnx", "torchscript", "pytorch_state_dict"]:
-            if weight_format in rd.weights:
-                summary = test_model(rd, weight_format=weight_format)
-                summary["name"] = f"{test_name} using {weight_format} weights"
-                write_summary(summary, dist / resource_id / version_id / f"test_summary_{weight_format}.yaml")
+            summary = test_model(rdf_path, weight_format=weight_format)
+            summary["name"] = f"{test_name} using {weight_format} weights"
+            write_summary(summary, summaries_dir / rd_id / f"test_summary_{weight_format}.yaml")
 
 
 if __name__ == "__main__":
