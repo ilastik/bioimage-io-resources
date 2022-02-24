@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Optional
 
 import typer
 
@@ -6,9 +7,17 @@ from bioimageio.core.resource_tests import test_model
 from bioimageio.spec.shared import yaml
 
 
-def write_summary(s: dict, p: Path):
+def write_summary(
+    p: Path, *, name: str, status: str, error: Optional[str] = None, reason: Optional[str] = None, **other
+):
     p.parent.mkdir(parents=True, exist_ok=True)
-    yaml.dump(s, p)
+    if status == "failed":
+        reason = "error"
+        assert error is not None
+    elif status != "passed":
+        assert reason is not None
+
+    yaml.dump(dict(name=name, status=status, error=error, reason=reason, **other), p)
 
 
 def write_test_summaries(rdf_dir: Path, resource_id: str, version_id: str, summaries_dir: Path):
@@ -27,7 +36,7 @@ def write_test_summaries(rdf_dir: Path, resource_id: str, version_id: str, summa
         rd_id = rdf.get("id")
         if rd_id is None or not isinstance(rd_id, str):
             print(
-                f"::warning file=scripts/test_with_ilastik.py,line=40,endline=44,title=Invalid RDF::"
+                f"::warning file=scripts/test_with_ilastik.py,line=37,endline=41,title=Invalid RDF::"
                 f"Missing/invalid 'id' in rdf {str(rdf_path.relative_to(rdf_dir).parent)}"
             )
             continue
@@ -36,19 +45,23 @@ def write_test_summaries(rdf_dir: Path, resource_id: str, version_id: str, summa
             status = "skipped"
             reason = "not a model RDF"
 
+        weight_formats = list(rdf.get("weights"))
+        if not weight_formats:
+            status = "failed"
+            error = f"Missing weight formats for {rd_id}"
+
         if status:
             # write single test summary
             write_summary(
-                dict(status=status, error=error, reason="error" if error else reason),
-                summaries_dir / rd_id / f"test_summary.yaml",
+                summaries_dir / rd_id / f"test_summary.yaml", name=test_name, status=status, error=error, reason=reason
             )
             continue
 
         # write test summary for each weight format
-        for weight_format in ["onnx", "torchscript", "pytorch_state_dict"]:
+        for weight_format in weight_formats:
             summary = test_model(rdf_path, weight_format=weight_format)
             summary["name"] = f"{test_name} using {weight_format} weights"
-            write_summary(summary, summaries_dir / rd_id / f"test_summary_{weight_format}.yaml")
+            write_summary(summaries_dir / rd_id / f"test_summary_{weight_format}.yaml", **summary)
 
 
 def main(
