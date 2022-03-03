@@ -70,7 +70,6 @@ collection:
       - name: ilastik Team
         github_user: ilastik
   - id: covid_if_training_data
-    name: Covid-IF Training Data
     authors:
     - {name: Constantin Pape}
     cite:
