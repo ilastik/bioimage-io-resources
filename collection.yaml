@@ -3,7 +3,7 @@ type: collection
 name: Ilastik Collection
 tags: [ilastik, bioimage.io]
 description: "Resources for BioImgage.IO curated by the ilastik team."
-documentation: https://ilastik.org
+
 authors:
   - name: "Fynn Beuttenmueller"
     github_user: fynnbe
@@ -24,10 +24,6 @@ maintainers:
     affiliation: "EMBL Heidelberg"
     orcid: "0000-0001-6562-7187"
 
-cite:
-  - text: "Berg, S., Kutra, D., Kroeger, T. et al. ilastik: interactive machine learning for (bio)image analysis. Nat Methods 16, 1226-1232 (2019)."
-    doi: 10.1038/s41592-019-0582-9
-
 config:  # todo: clean up config (which of these fields are still used?)
   id: ilastik
   name: ilastik
@@ -47,6 +43,8 @@ config:  # todo: clean up config (which of these fields are still used?)
 
 collection:
   - id: ilastik
+    name: ilastik
+    description: "the interactive learning and segmentation toolkit"
     format_version: 0.2.2
     source: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/src/ilastik-app.imjoy.html
     type: application
@@ -55,7 +53,13 @@ collection:
     maintainers:
       - name: ilastik Team
         github_user: ilastik
+    cite:
+      - text: "Berg, S., Kutra, D., Kroeger, T. et al. ilastik: interactive machine learning for (bio)image analysis. Nat Methods 16, 1226-1232 (2019)."
+        doi: 10.1038/s41592-019-0582-9 
+    documentation: https://raw.githubusercontent.com/ilastik/ilastik/main/Readme.md
   - id: live-cell-boundary-model
+    name: Live cell boundary model preview
+    description: "Run the live cell boundary model via the BioEngine"
     format_version: 0.2.2
     source: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/src/live-cell-boundary-preview.imjoy.html
     type: application
@@ -66,6 +70,7 @@ collection:
       - name: ilastik Team
         github_user: ilastik
   - id: covid_if_training_data
+    name: Covid-IF Training Data
     authors:
     - {name: Constantin Pape}
     cite:
