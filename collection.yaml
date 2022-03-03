@@ -165,3 +165,31 @@ collection:
     source: https://doi.org/10.5281/zenodo.3675220
     tags: [electron-microscopy, platynereis, cells, cilia, nuclei, instance-segmentation, 3D]
     type: dataset
+  - id: plantseg_ovules
+    authors:
+    - {name: Constantin Pape}
+    cite:
+    - {doi: 'https://doi.org/10.7554/eLife.57613', text: 'Wolny et al.'}
+    covers: ['https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/dataset_src/plantseg_cover.jpg']
+    description: Training data for cell segmentation in Arabidopsis ovules.
+    documentation: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/dataset_src/plantseg_ovules.md
+    format_version: 0.2.1
+    license: CC-BY-4.0
+    name: Arabidopsis Ovules Traning Data
+    source: https://osf.io/w38uf/
+    tags: [light-microscopy, arabidopsis, cells, instance-segmentation, 3D]
+    type: dataset
+  - id: plantseg_root
+    authors:
+    - {name: Constantin Pape}
+    cite:
+    - {doi: 'https://doi.org/10.7554/eLife.57613', text: 'Wolny et al.'}
+    covers: ['https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/dataset_src/plantseg_cover.jpg']
+    description: Training data for cell segmentation in Arabidopsis lateral root.
+    documentation: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/dataset_src/plantseg_root.md
+    format_version: 0.2.1
+    license: CC-BY-4.0
+    name: Arabidopsis Lateral Root Traning Data
+    source: https://osf.io/2rszy/
+    tags: [light-microscopy, arabidopsis, cells, instance-segmentation, 3D]
+    type: dataset
