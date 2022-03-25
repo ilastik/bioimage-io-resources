@@ -116,8 +116,8 @@ jobs:
     - uses: actions/download-artifact@v3
     - name: merge ilastik test summaries  # (they differ by postfix)
       run: |
-      mkdir dist
-      cp -r artifacts/*/* dist
+        mkdir dist
+        cp -r artifacts/*/* dist
     - name: Deploy test summaries to gh-pages 🚀
       uses: JamesIves/github-pages-deploy-action@v4.2.3
       with:
