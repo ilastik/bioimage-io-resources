@@ -110,6 +110,7 @@ jobs:
         retention-days: 1
 
   deploy:
+    needs: run
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
