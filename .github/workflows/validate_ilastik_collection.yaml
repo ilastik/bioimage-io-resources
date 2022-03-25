@@ -16,10 +16,10 @@ jobs:
       run: pip install bioimageio.spec
     - name: validate collection
       run: bioimageio validate collection.yaml
-    - name: trigger collection update
-      uses: octokit/request-action@v2.x
-      env:
-        GITHUB_TOKEN: ${{ secrets.PAT }}
-      with:
-        route: POST /repos/bioimage-io/collection-bioimage-io/actions/workflows/auto_update_main.yaml/dispatches
-        ref: refs/heads/main
+#    - name: trigger collection update
+#      uses: octokit/request-action@v2.x
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.PAT }}
+#      with:
+#        route: POST /repos/bioimage-io/collection-bioimage-io/actions/workflows/auto_update_main.yaml/dispatches
+#        ref: refs/heads/main
