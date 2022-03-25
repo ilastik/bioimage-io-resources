@@ -21,7 +21,7 @@ def write_summary(
     yaml.dump(dict(name=name, status=status, error=error, reason=reason, **other), p)
 
 
-def write_test_summaries(rdf_dir: Path, resource_id: str, version_id: str, summaries_dir: Path):
+def write_test_summaries(rdf_dir: Path, resource_id: str, version_id: str, summaries_dir: Path, postfix: str):
     for rdf_path in rdf_dir.glob(f"{resource_id}/{version_id}/rdf.yaml"):
         test_name = "reproduce test outputs with ilastik <todo version> (draft)"
         error = None
@@ -54,7 +54,7 @@ def write_test_summaries(rdf_dir: Path, resource_id: str, version_id: str, summa
         if status:
             # write single test summary
             write_summary(
-                summaries_dir / rd_id / f"test_summary.yaml", name=test_name, status=status, error=error, reason=reason
+                summaries_dir / rd_id / f"test_summary_{postfix}.yaml", name=test_name, status=status, error=error, reason=reason
             )
             continue
 
@@ -66,7 +66,7 @@ def write_test_summaries(rdf_dir: Path, resource_id: str, version_id: str, summa
                 summary = dict(error=str(e), traceback=traceback.format_tb(e.__traceback__))
 
             summary["name"] = f"{test_name} using {weight_format} weights"
-            write_summary(summaries_dir / rd_id / f"test_summary_{weight_format}.yaml", **summary)
+            write_summary(summaries_dir / rd_id / f"test_summary_{weight_format}_{postfix}.yaml", **summary)
 
 
 def main(
@@ -74,6 +74,7 @@ def main(
     resource_id: str,
     version_id: str = "**",
     rdf_dir: Path = Path(__file__).parent / "../bioimageio-gh-pages/rdfs",
+    postfix: str = ""
 ):
     """ preliminary ilastik check
 
@@ -82,7 +83,7 @@ def main(
     """
     summaries_dir = dist / "test_summaries"
     summaries_dir.mkdir(parents=True, exist_ok=True)
-    write_test_summaries(rdf_dir, resource_id, version_id, summaries_dir)
+    write_test_summaries(rdf_dir, resource_id, version_id, summaries_dir, postfix)
 
 
 if __name__ == "__main__":
