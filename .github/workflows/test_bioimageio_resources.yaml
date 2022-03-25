@@ -22,7 +22,7 @@ jobs:
     - uses: actions/checkout@v2
     - uses: actions/checkout@v2
       with:
-        repository: fynnbe/collection-bioimage-io  # todo: change orga to bioimage-io
+        repository: bioimage-io/collection-bioimage-io
         ref: gh-pages
         path: bioimageio-gh-pages
 #    - name: install validation dependencies  # todo: cache env
