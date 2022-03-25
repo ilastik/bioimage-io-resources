@@ -28,8 +28,13 @@ def iterate_over_gh_matrix(matrix: Union[str, Dict[str, list]]):
             yield dict(zip(keys, vals))
 
 
-def main(dist: Path, pending_matrix: str, rdf_dir: Path = Path(__file__).parent / "../bioimageio-gh-pages/rdfs"):
-    """ preliminary ilastik check
+def main(
+    dist: Path,
+    pending_matrix: str,
+    rdf_dir: Path = Path(__file__).parent / "../bioimageio-gh-pages/rdfs",
+    postfix: str = "",
+):
+    """preliminary ilastik check
 
     only checks if test outputs are reproduced for onnx, torchscript, or pytorch_state_dict weights .
 
@@ -40,7 +45,7 @@ def main(dist: Path, pending_matrix: str, rdf_dir: Path = Path(__file__).parent 
         resource_id = matrix["resource_id"]
         version_id = matrix["version_id"]
 
-        write_test_summaries(rdf_dir, resource_id, version_id, summaries_dir)
+        write_test_summaries(rdf_dir, resource_id, version_id, summaries_dir, postfix)
 
 
 if __name__ == "__main__":
