@@ -1,4 +1,4 @@
-{bioimageio_core_version: 0.5.1, bioimageio_spec_version: 0.4.5post3, error: "Output
+{bioimageio_core_version: 0.5.3post2, bioimageio_spec_version: 0.4.5post6, error: "Output
     and expected output disagree:\n \nArrays are not almost equal to 4 decimals\n\nMismatched
     elements: 7518 / 1638400 (0.459%)\nMax absolute difference: 0.00075448\nMax relative
     difference: 0.00320624\n x: array([[[[[0.1346, 0.0898, 0.06  , ..., 0.7108, 0.6976,
