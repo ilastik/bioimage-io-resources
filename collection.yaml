@@ -199,3 +199,17 @@ collection:
     source: https://osf.io/2rszy/
     tags: [light-microscopy, arabidopsis, cells, instance-segmentation, 3D]
     type: dataset
+  - id: vnc
+    authors:
+    - {name: Constantin Pape}
+    cite:
+    - {doi: 'http://dx.doi.org/10.6084/m9.figshare.856713', text: 'Gerhard et al.'}
+    covers: ['https://s3-eu-west-1.amazonaws.com/pfigshare-u-previews/1288336/preview.jpg']
+    description: Training data for cell segmentation in Arabidopsis lateral root.
+    documentation: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/dataset_src/vnc.md
+    format_version: 0.2.1
+    license: CC-BY-4.0
+    name: Segmented anisotropic ssTEM dataset of neural tissue
+    source: https://github.com/unidesigner/groundtruth-drosophila-vnc
+    tags: [electron-microscopy, drosophila, neurons, instance-segmentation]
+    type: dataset
