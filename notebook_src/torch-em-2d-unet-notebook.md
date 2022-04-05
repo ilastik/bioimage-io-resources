@@ -4,3 +4,4 @@ Train a 2d UNet for a segmentation task with the [torch_em](https://github.com/c
 
 `torch_em` is a thin wrapper around `pytorch` for training models for segmentation and other image analysis tasks in microscopy.
 This notebooks implements training a 2d network with it on preconfigured datasets or on your own custom data.
+It is also [available via google colab](https://colab.research.google.com/github/constantinpape/torch-em/blob/main/experiments/2D-UNet-Training.ipynb).
