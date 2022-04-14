@@ -1,14 +1,10 @@
-bioimageio_core_version: 0.5.3post2
-bioimageio_spec_version: 0.4.5post6
-error: cannot reshape array of size 581342 into shape (1,1,100,128,128)
-name: reproduce test outputs with ilastik <todo version> (draft) using pytorch_state_dict
-  weights
-reason: error
-status: failed
-traceback: ["  File \"/usr/share/miniconda3/envs/ilastik-env/lib/python3.7/site-packages/bioimageio/core/resource_tests.py\",
-    line 126, in test_resource\n    inputs = [np.load(str(in_path)) for in_path in
-    model.test_inputs]\n", "  File \"/usr/share/miniconda3/envs/ilastik-env/lib/python3.7/site-packages/bioimageio/core/resource_tests.py\",
-    line 126, in <listcomp>\n    inputs = [np.load(str(in_path)) for in_path in model.test_inputs]\n",
-  "  File \"/usr/share/miniconda3/envs/ilastik-env/lib/python3.7/site-packages/numpy/lib/npyio.py\",
-    line 441, in load\n    pickle_kwargs=pickle_kwargs)\n", "  File \"/usr/share/miniconda3/envs/ilastik-env/lib/python3.7/site-packages/numpy/lib/format.py\",
-    line 787, in read_array\n    array.shape = shape\n"]
+{bioimageio_core_version: 0.5.3post2, bioimageio_spec_version: 0.4.5post6, error: "Output
+    and expected output disagree:\n \nArrays are not almost equal to 4 decimals\n\nMismatched
+    elements: 7518 / 1638400 (0.459%)\nMax absolute difference: 0.00075448\nMax relative
+    difference: 0.00320624\n x: array([[[[[0.1346, 0.0898, 0.06  , ..., 0.7108, 0.6976,
+    0.591 ],\n          [0.069 , 0.0445, 0.0313, ..., 0.7929, 0.8041, 0.7187],\n          [0.0401,
+    0.0229, 0.017 , ..., 0.7752, 0.7838, 0.7582],...\n y: array([[[[[0.1346, 0.0898,
+    0.06  , ..., 0.7108, 0.6976, 0.591 ],\n          [0.0689, 0.0445, 0.0313, ...,
+    0.7929, 0.8041, 0.7187],\n          [0.0401, 0.0229, 0.0169, ..., 0.7752, 0.7838,
+    0.7582],...", name: reproduce test outputs with ilastik <todo version> (draft)
+    using pytorch_state_dict weights, reason: error, status: failed, traceback: null}
