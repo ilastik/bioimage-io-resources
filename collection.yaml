@@ -55,7 +55,7 @@ collection:
         github_user: ilastik
     cite:
       - text: "Berg, S., Kutra, D., Kroeger, T. et al. ilastik: interactive machine learning for (bio)image analysis. Nat Methods 16, 1226-1232 (2019)."
-        doi: 10.1038/s41592-019-0582-9 
+        doi: 10.1038/s41592-019-0582-9
     documentation: https://raw.githubusercontent.com/ilastik/ilastik/main/Readme.md
   - id: live-cell-boundary-model
     name: Live cell boundary model preview
@@ -69,6 +69,21 @@ collection:
     maintainers:
       - name: ilastik Team
         github_user: ilastik
+  - id: mws
+    name: Mutex Watershed Plugin
+    description: "Segmentation plugin for models that predict pixel affinities"
+    format_version: 0.2.2
+    source: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/src/mws-segmentation.imjoy.html
+    type: application
+    authors:
+      - name: Constantin Pape
+    maintainers:
+      - name: Constantin Pape
+        github_user: constantinpape
+    cite:
+      - text: "Wolf, Pape et al. The Mutex Watershed: Efficient, Parameter-Free Image Partitioning"
+        doi: 10.1007/978-3-030-01225-0_34
+    documentation: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/src/mws-segmentation.md
   - id: covid_if_training_data
     authors:
     - {name: Constantin Pape}

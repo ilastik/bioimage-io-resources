@@ -1,0 +1,159 @@
+<config lang="json">
+{G
+    "name": "mws-segmentation",
+    "type": "web-worker",
+    "tags": [],
+    "version": "0.1.1",
+    "cover": "",
+    "description": "Run the mutex watershed for instance segmentation of affinity predictions",
+    "icon": "https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/image/mws.png",
+    "inputs": null,
+    "outputs": null,
+    "api_version": "0.1.8",
+    "env": "",
+    "permissions": [],
+    "requirements": [],
+    "dependencies": []
+}
+</config>
+
+<script lang="javascript">
+function readFile(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsArrayBuffer(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
+}
+
+class ImJoyPlugin {
+    async setup() {
+      await api.showMessage("Initializing the inference plugin, this may take a while...")
+      const plugin_source = await api.getAttachment("inference-plugin")
+      this.inferencePlugin = await api.loadPlugin({src: plugin_source})
+        const self = this;
+        const viewer = await api.createWindow({src: "https://kaibu.org/#/app", name: "Kaibu", fullscreen: true})
+        await viewer.add_widget({
+            "_rintf": true,
+            "name": "Control",
+            "type": "form",
+            "fields": [
+                {
+                  "type": "files",
+                  "label": "Input Image"
+                },
+                {
+                    "html": "<div class='box'><article class='media'><div class='media-content'><div class='content'><p><strong class='has-text-info'>Live Cell Segmentation Boundary Model</strong><br>Try model with your own image or this <a href='https://zenodo.org/api/files/a6d477fe-9412-4064-b7e6-67f057fec920/sample_input_0.tif' target='_blank'>example image</a>. Drag and drop an image in the box above and click 'Submit'.</p></div>"
+                },
+            ],
+            async form_submit_callback(values){
+                await viewer.set_loader(true);
+                try{
+                    const file = values['Input Image'][0]
+                    await api.showMessage("Reading input image " + file.name)
+                    const bytes = await readFile(file)
+                    const input_image = await self.inferencePlugin.render_image(bytes, file.name)
+                    await viewer.view_image(input_image, {name: "input image"})
+                    await api.showMessage("Running inference...")
+                    const prediction = await self.inferencePlugin.run_inference(bytes, file.name)
+
+                    # TODO run mws segmentation
+                    await api.showMessage("Run segmentation...")
+
+                    await api.showMessage("Displaying results...")
+                    await viewer.view_image(, {name: "mws segmentation"})
+                    await api.showMessage("Done!")
+                }
+                catch(e){
+                    await api.alert(`Failed to process the input image, error: ${e}`);
+                    console.error(e)
+                }
+                finally{
+                    await viewer.set_loader(false);
+                }
+            }
+        })
+    }
+    async run(ctx){
+    }
+}
+api.export(new ImJoyPlugin())
+</script>
+
+<attachment name="inference-plugin">
+<config lang="json">
+{
+  "name": "mws-inference-plugin",
+  "type": "web-python",
+  "version": "0.1.0",
+  "description": "Affinity model inference",
+  "tags": [],
+  "ui": "",
+  "cover": "",
+  "inputs": null,
+  "outputs": null,
+  "flags": [],
+  "icon": "extension",
+  "api_version": "0.1.8",
+  "env": "",
+  "permissions": [],
+  "requirements": ["pyotritonclient", "pillow"],
+  "dependencies": []
+}
+</config>
+
+<script lang="python">
+from imjoy import api
+import io
+from PIL import Image
+import numpy as np
+from pyotritonclient import execute
+import base64
+import pyodide
+from io import BytesIO
+
+def read_image(bytes, name=None, grayscale=False, size=None):
+    buffer = io.BytesIO(bytes)
+    buffer.name = name or url.split('?')[0].split('/')[1]
+    image = Image.open(buffer).convert('L')
+    if grayscale:
+        image = image.convert('L')
+    if size:
+        image = image.resize(size=size)
+    image = np.array(image)
+    return image
+
+
+def encode_image(image):
+    image = Image.fromarray(image)
+    buffered = BytesIO()
+    image.save(buffered, format="PNG")
+    img_str = 'data:image/png;base64,' + base64.b64encode(buffered.getvalue()).decode('ascii')
+    return img_str
+
+
+class ImJoyPlugin():
+    def setup(self):
+        api.log('initialized')
+
+    async def render_image(self, file_bytes, file_name):
+        input_image = read_image(file_bytes.tobytes(), name=file_name)
+        return encode_image(input_image)
+
+    async def run_inference(self, file_bytes, file_name):
+        input_image = read_image(file_bytes.tobytes(), name=file_name)
+        if input_image.ndim == 2:
+            input_image = input_image[None, :, :]
+        # run inference
+        # TODO get the current model doi
+        results = await execute([input_image.astype('float32'), {}],
+                                  server_url='https://ai.imjoy.io/triton',
+                                  model_name='bioimageio-live-cell-segmentation-boundary-model',
+                                  decode_bytes=True)
+        mask = results['output_0'][1, :, :] * 255
+        return {"mask": encode_image(mask.astype('uint8'))}
+
+api.export(ImJoyPlugin())
+</script>
+</attachment>
