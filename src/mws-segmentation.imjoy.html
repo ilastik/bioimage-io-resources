@@ -1,5 +1,5 @@
 <config lang="json">
-{G
+{
     "name": "mws-segmentation",
     "type": "web-worker",
     "tags": [],
@@ -56,13 +56,9 @@ class ImJoyPlugin {
                     const input_image = await self.inferencePlugin.render_image(bytes, file.name)
                     await viewer.view_image(input_image, {name: "input image"})
                     await api.showMessage("Running inference...")
-                    const prediction = await self.inferencePlugin.run_inference(bytes, file.name)
-
-                    # TODO run mws segmentation
-                    await api.showMessage("Run segmentation...")
-
+                    const result = await self.inferencePlugin.run_inference(bytes, file.name)
                     await api.showMessage("Displaying results...")
-                    await viewer.view_image(, {name: "mws segmentation"})
+                    await viewer.view_image(result.mask, {name: "mws segmentation"})
                     await api.showMessage("Done!")
                 }
                 catch(e){
@@ -134,8 +130,13 @@ def encode_image(image):
 
 
 class ImJoyPlugin():
-    def setup(self):
-        api.log('initialized')
+    async def setup(self):
+        await api.showMessage("Connecting to the server...")
+        api = await connect_to_server(
+            {"name": "mws client", "server_url": "https://ai.imjoy.io/", "method_timeout": 3000}
+        )
+        self.triton = await api.get_service("triton-client")
+        await api.log('initialized')
 
     async def render_image(self, file_bytes, file_name):
         input_image = read_image(file_bytes.tobytes(), name=file_name)
@@ -143,15 +144,26 @@ class ImJoyPlugin():
 
     async def run_inference(self, file_bytes, file_name):
         input_image = read_image(file_bytes.tobytes(), name=file_name)
-        if input_image.ndim == 2:
-            input_image = input_image[None, :, :]
-        # run inference
-        # TODO get the current model doi
-        results = await execute([input_image.astype('float32'), {}],
-                                  server_url='https://ai.imjoy.io/triton',
-                                  model_name='bioimageio-live-cell-segmentation-boundary-model',
-                                  decode_bytes=True)
-        mask = results['output_0'][1, :, :] * 255
+        assert input_image.ndim == 2
+        # Shape example: (1, 3, 128, 128)
+        input_image = np.stack([input_image,]*3, axis=0)[None, :, :, :]
+        nucleus_segmentation_model = "10.5281/zenodo.6200999"
+        # cell_segmentation_model = "10.5281/zenodo.6200635"
+        # classification_model = "10.5281/zenodo.5911832"
+        #image = np.random.randint(0, 255, size=(1, 3, 128, 128), dtype=np.uint8)
+        kwargs = {"inputs": [input_image], "model_id": nucleus_segmentation_model}
+        results = await self.triton.execute(
+            inputs=[kwargs],
+            model_name="bioengine-model-runner",
+            serialization="imjoy",
+        )
+        result = results["outputs"]
+        assert result["success"] == True, result["error"]
+        # assert result["outputs"][0].shape == (1, 3, 128, 128), str(
+        #     result["outputs"][0].shape
+        # )
+        mask = result["outputs"][0][0, 1, :, :] * 255
+        # mask = results['output_0'][1, :, :] * 255
         return {"mask": encode_image(mask.astype('uint8'))}
 
 api.export(ImJoyPlugin())
