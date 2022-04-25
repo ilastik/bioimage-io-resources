@@ -152,12 +152,12 @@ class ImJoyPlugin():
         # classification_model = "10.5281/zenodo.5911832"
         #image = np.random.randint(0, 255, size=(1, 3, 128, 128), dtype=np.uint8)
         kwargs = {"inputs": [input_image], "model_id": nucleus_segmentation_model}
-        results = await self.triton.execute(
+        ret = await self.triton.execute(
             inputs=[kwargs],
             model_name="bioengine-model-runner",
             serialization="imjoy",
         )
-        result = results["outputs"]
+        result = ret["result"]
         assert result["success"] == True, result["error"]
         # assert result["outputs"][0].shape == (1, 3, 128, 128), str(
         #     result["outputs"][0].shape
