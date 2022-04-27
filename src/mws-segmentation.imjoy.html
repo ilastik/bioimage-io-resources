@@ -101,7 +101,7 @@ api.export(new ImJoyPlugin())
   "api_version": "0.1.8",
   "env": "",
   "permissions": [],
-  "requirements": ["pyotritonclient", "pillow"],
+  "requirements": ["imjoy-rpc", "pillow"],
   "dependencies": []
 }
 </config>
@@ -111,7 +111,7 @@ from imjoy import api
 import io
 from PIL import Image
 import numpy as np
-from pyotritonclient import execute
+from imjoy_rpc.hypha import connect_to_server
 import base64
 import pyodide
 from io import BytesIO
@@ -139,10 +139,11 @@ def encode_image(image):
 class ImJoyPlugin():
     async def setup(self):
         await api.showMessage("Connecting to the server...")
-        api = await connect_to_server(
+        server = await connect_to_server(
             {"name": "mws client", "server_url": "https://ai.imjoy.io/", "method_timeout": 3000}
         )
-        self.triton = await api.get_service("triton-client")
+        self.triton = await server.get_service("triton-client")
+        await api.showMessage("Connected to the server.")
         await api.log('initialized')
 
     async def render_image(self, file_bytes, file_name):
