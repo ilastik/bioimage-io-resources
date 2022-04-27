@@ -30,9 +30,9 @@ function readFile(file) {
 
 class ImJoyPlugin {
     async setup() {
-      await api.showMessage("Initializing the inference plugin, this may take a while...")
     }
     async run(ctx){
+        await api.showMessage("Initializing the inference plugin, this may take a while...")
         // https://bioimage.io/#/?tags=affinity&id=10.5281%2Fzenodo.6079314
         ctx.data = ctx.data || {};
         const model_id = ctx.data.id || "10.5281/zenodo.6079314";
