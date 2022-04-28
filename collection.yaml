@@ -218,13 +218,13 @@ collection:
     - {name: Constantin Pape}
     cite:
     - {doi: '10.5281/zenodo.5108853', text: 'Pape et al.'}
-    covers: ['https://github.com/constantinpape/torch-em/blob/main/experiments/misc/targets.png']
+    covers: ['https://raw.githubusercontent.com/constantinpape/torch-em/main/experiments/misc/targets.png']
     description: Train a 2d UNet for semgentation tasks
     documentation: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/notebook_src/torch-em-2d-unet-notebook.md
     format_version: 0.2.1
     license: CC-BY-4.0
     name: 2D UNet Training
-    source: https://github.com/constantinpape/torch-em/blob/main/experiments/2D-UNet-Training.ipynb
+    source: https://raw.githubusercontent.com/constantinpape/torch-em/main/experiments/2D-UNet-Training.ipynb
     tags: [instance-segmentation, semantic-segmentation, u-net, 2d]
     type: notebook
   - id: torch-em-3d-unet-notebook
@@ -232,12 +232,12 @@ collection:
     - {name: Constantin Pape}
     cite:
     - {doi: '10.5281/zenodo.5108853', text: 'Pape et al.'}
-    covers: ['https://github.com/constantinpape/torch-em/blob/main/experiments/misc/targets.png']
+    covers: ['https://raw.githubusercontent.com/constantinpape/torch-em/main/experiments/misc/targets.png']
     description: Train a 2d UNet for semgentation tasks
     documentation: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/notebook_src/torch-em-3d-unet-notebook.md
     format_version: 0.2.1
     license: CC-BY-4.0
     name: 3D UNet Training
-    source: https://github.com/constantinpape/torch-em/blob/main/experiments/3D-UNet-Training.ipynb
+    source: https://raw.githubusercontent.com/constantinpape/torch-em/main/experiments/3D-UNet-Training.ipynb
     tags: [instance-segmentation, semantic-segmentation, u-net, 3d]
     type: notebook
