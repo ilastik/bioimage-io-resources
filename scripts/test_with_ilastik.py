@@ -23,7 +23,7 @@ def write_summary(
 
 def write_test_summaries(rdf_dir: Path, resource_id: str, version_id: str, summaries_dir: Path, postfix: str):
     for rdf_path in rdf_dir.glob(f"{resource_id}/{version_id}/rdf.yaml"):
-        test_name = "reproduce test outputs with ilastik <todo version> (draft)"
+        test_name = f"reproduce test outputs with ilastik {postfix}"
         error = None
         status = None
         reason = None
