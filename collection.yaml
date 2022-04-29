@@ -69,7 +69,7 @@ collection:
     maintainers:
       - name: ilastik Team
         github_user: ilastik
-  - id: mws
+  - id: mws-segmentation
     name: Mutex Watershed Plugin
     description: "Segmentation plugin for models that predict pixel affinities"
     format_version: 0.2.2
