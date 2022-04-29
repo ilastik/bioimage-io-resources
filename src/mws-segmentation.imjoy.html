@@ -62,15 +62,13 @@ class ImJoyPlugin {
                     const bytes = await readFile(file)
                     const input_image = await self.inferencePlugin.render_image(bytes, file.name)
                     await viewer.view_image(input_image, {name: "input image"})
-                    await api.showMessage("qqqRunning inference...")
+                    await api.showMessage("Running inference...")
                     const result = await self.inferencePlugin.run_inference(model_id, bytes, file.name)
                     console.log('=============', Module)
                     
                     await api.showMessage(result.offsets[0,1])
                     const num_channels = result.nchannels
-                    const num_pixels = result.width * result.height
-
-                    await api.showMessage("float float!")
+                    const num_pixels = result.height * result.width
 
                     var weights = Module.create_float_vector(num_channels * num_pixels);
                     var weight_id = 0;
@@ -85,33 +83,35 @@ class ImJoyPlugin {
                             weight_id += 1
                         }
                     }
-                    await api.showMessage("pre offsets!")
+
                     var offsets = Module.create_int_vector(num_channels * 2);
                     for (var c = 0; c < num_channels; c += 1) {
                         offsets.set((2*c), result.offsets[c][0]);
                         offsets.set((2*c)+1, result.offsets[c][1]);
                     }
 
-                    await viewer.view_image(result.mask, {name: "mws segmentation"})
+                    await api.showMessage("Computing MWS segmentation")
+                    await viewer.view_image(result.vis_sr_aff, {name: "short range affinities"})
+                    await viewer.view_image(result.vis_lr_aff, {name: "long range affinities"})
 
                     var strides = Module.create_int_vector(2);
                     strides.set(0, 4);
                     strides.set(1, 4);
 
-                    await api.showMessage("MWS!")
-
-                    var labels = Module.mutex_watershed_2d(weights,
+                    const labels = Module.mutex_watershed_2d(weights,
                                                offsets,
                                                strides,
-                                               result.width,
                                                result.height,
+                                               result.width,
                                                true);
-                    await api.showMessage("get empty!")
 
-                    var vis_labels = self.inferencePlugin.get_empty_image(result.width, result.height)
-                    await api.showMessage("got vis la")
-                    var encoded_label_image = self.inferencePlugin.encode_segmentation(labels)
-                    await viewer.view_image(encoded_label_image, {name: "segmentation"})                    
+                    var segmentation = new Int32Array(num_pixels)
+                    for (var i = 0; i < num_pixels; i += 1) {
+                        segmentation[i] = labels.get(i);
+                    }
+                    var encoded_label_image = self.inferencePlugin.encode_segmentation(segmentation, result.height, result.width)
+                    await viewer.view_image(encoded_label_image, {name: "segmentation"})
+                    await api.showMessage("Inference complete")             
                 }
                 catch(e){
                     await api.alert(`Failed to process the input image, error: ${e}`);
@@ -144,7 +144,7 @@ api.export(new ImJoyPlugin())
   "api_version": "0.1.8",
   "env": "",
   "permissions": [],
-  "requirements": ["imjoy-rpc", "pillow"],
+  "requirements": ["imjoy-rpc", "pillow", "numpy"],
   "dependencies": []
 }
 </config>
@@ -198,11 +198,7 @@ class ImJoyPlugin():
         assert input_image.ndim == 2
         # Shape example: (1, 3, 128, 128)
         input_image = input_image[None, None]
-        # input_image = np.random.randint(0, 255, size=(1, 1, 256, 256), dtype=np.uint8)
-        await api.showMessage("inputshape   "+str(input_image.shape))
-        
         kwargs = {"inputs": [input_image], "model_id": model_id, "return_rdf": True}
-        await api.showMessage("uaaaaaa...")
 
         ret = await self.triton.execute(
             inputs=[kwargs],
@@ -212,20 +208,20 @@ class ImJoyPlugin():
         result = ret["result"]
         assert result["success"] == True, result["error"]
 
-        # assert result["outputs"][0].shape == (1, 3, 128, 128), str(
-        #     result["outputs"][0].shape
-        # )
         offsets = [a for a in [b for b in result['rdf']['config']['mws']['offsets']]]
-        visualization_mask = result["outputs"][0][0, 4, :, :] * 255
+        visualization_shortrange_affinity = result["outputs"][0][0, 0, :, :] * 255
+        visualization_longrange_affinity = result["outputs"][0][0, 4, :, :] * 255
         mask = result["outputs"][0]
-        api.showMessage("done done    ")
-        return {"affinities": [float(_) for _ in mask.ravel()], "mask": encode_image(visualization_mask.astype('uint8')),
-                "vis": visualization_mask.astype('uint8'),
-               "offsets": offsets, "nchannels": len(offsets), "width":mask.shape[-2], "height":mask.shape[-1]}
+        return {"affinities": [float(_) for _ in mask.ravel()],
+                "vis_sr_aff": encode_image(visualization_shortrange_affinity.astype('uint8')),
+                "vis_lr_aff": encode_image(visualization_longrange_affinity.astype('uint8')),
+               "offsets": offsets, "nchannels": len(offsets), "width":mask.shape[-1], "height":mask.shape[-2]}
 
-    async def encode_segmentation(self, image):
-        out = np.random.randint(0, 255, size=(256, 256), dtype=np.uint8)
-        api.showMessage(image)
+    def encode_segmentation(self, image, width, height):
+        out = np.zeros((width, height), dtype=np.uint8)
+        for i in range(width):
+            for j in range(height):
+                out[i,j] = image[height*i+j]
         return encode_image(out)        
 
 api.export(ImJoyPlugin())
