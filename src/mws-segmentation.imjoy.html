@@ -218,11 +218,17 @@ class ImJoyPlugin():
                "offsets": offsets, "nchannels": len(offsets), "width":mask.shape[-1], "height":mask.shape[-2]}
 
     def encode_segmentation(self, image, width, height):
-        out = np.zeros((width, height), dtype=np.uint8)
+
+        out = np.zeros((width, height,3), dtype=np.uint8)
+        n_colors = 1000
+        cmap = np.random.randint(40, high=255, size=(n_colors, 3), dtype=np.uint8)
+
         for i in range(width):
             for j in range(height):
-                out[i,j] = image[height*i+j]
-        return encode_image(out)        
+                for c in range(3):
+                    out[i, j, c] = cmap[int(image[height*i+j]) % n_colors, c]
+
+        return encode_image(out)
 
 api.export(ImJoyPlugin())
 </script>
