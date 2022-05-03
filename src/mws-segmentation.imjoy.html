@@ -51,7 +51,24 @@ class ImJoyPlugin {
                   "label": "Input Image"
                 },
                 {
-                    "html": "<div class='box'><article class='media'><div class='media-content'><div class='content'><p><strong class='has-text-info'>Live Cell Segmentation Boundary Model</strong><br>Try model with your own image or this <a href='https://zenodo.org/api/files/a6d477fe-9412-4064-b7e6-67f057fec920/sample_input_0.tif' target='_blank'>example image</a>. Drag and drop an image in the box above and click 'Submit'.</p></div>"
+                    "html": `
+                    <div class='box'>
+                    <article class='media'>
+                    <div class='media-content'>
+                    <div class='content'>
+                        <p>
+                        <strong class='has-text-info'>${ctx.data.name || 'Mutex Watershed Segmentation'}</strong>
+                        <br>Try model with your own image or this 
+                        <a href='https://zenodo.org/api/files/a6d477fe-9412-4064-b7e6-67f057fec920/sample_input_0.tif' target='_blank'>
+                        example image
+                        </a>.
+                        Drag and drop an image in the box above and click 'Submit'.
+                        </p>
+                    </div>
+                    </div>
+                    </article>
+                    </div>
+                    `
                 },
             ],
             async form_submit_callback(values){
@@ -64,9 +81,6 @@ class ImJoyPlugin {
                     await viewer.view_image(input_image, {name: "input image"})
                     await api.showMessage("Running inference...")
                     const result = await self.inferencePlugin.run_inference(model_id, bytes, file.name)
-                    console.log('=============', Module)
-                    
-                    await api.showMessage(result.offsets[0,1])
                     const num_channels = result.nchannels
                     const num_pixels = result.height * result.width
 
