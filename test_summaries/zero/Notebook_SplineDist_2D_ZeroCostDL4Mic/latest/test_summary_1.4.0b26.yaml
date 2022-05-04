@@ -1,3 +1,2 @@
 {error: Missing/invalid weight formats for zero/Notebook_SplineDist_2D_ZeroCostDL4Mic/latest,
-  name: reproduce test outputs with ilastik <todo version> (draft), reason: error,
-  status: failed}
+  name: reproduce test outputs with ilastik 1.4.0b26, reason: error, status: failed}
