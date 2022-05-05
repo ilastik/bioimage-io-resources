@@ -13,9 +13,9 @@ jobs:
     - name: checkout
       uses: actions/checkout@v2
     - name: install bioimageio.spec
-      run: pip install bioimageio.spec
+      run: pip install bioimageio.spec lxml
     - name: validate collection
-      run: bioimageio validate collection.yaml
+      run: bioimageio validate-partner-collection collection.yaml
 #    - name: trigger collection update
 #      uses: octokit/request-action@v2.x
 #      env:
