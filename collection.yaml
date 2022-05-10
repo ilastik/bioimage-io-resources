@@ -267,3 +267,17 @@ collection:
     source: https://raw.githubusercontent.com/constantinpape/torch-em/main/experiments/3D-UNet-Training.ipynb
     tags: [instance-segmentation, semantic-segmentation, u-net, 3d]
     type: notebook
+  - id: tnbc
+    authors:
+    - {name: Constantin Pape}
+    cite:
+    - {doi: 'https://doi.org/10.1109/TMI.2018.2865709', text: 'Nayolor et al.'}
+    covers: ['https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/dataset_src/tnbc_cover.jpg']
+    description: Dataset of H&E Brightfield images with nucleus instance annotations. Contains 50 annotated images, divided into 11 patients.
+    documentation: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/dataset_src/tnbc.md
+    format_version: 0.2.1
+    license: CC-BY-4.0
+    name: Segmentation of Nuclei in Histopathology Images
+    source: https://zenodo.org/record/1175282#.Ynpj81xBwUG
+    tags: [nuclei, instance-segmentation, brightfield-microscopy, 2D]
+    type: dataset
