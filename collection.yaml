@@ -214,6 +214,17 @@ collection:
     source: https://osf.io/2rszy/
     tags: [light-microscopy, arabidopsis, cells, instance-segmentation, 3D]
     type: dataset
+  - id: arabidopsis_tissue_atlas
+    authors:
+    - {name: Constantin Pape}
+    covers: ['https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/dataset_src/arabidopsis_atlas.jpg']
+    description: 3D digital tissue atlas of Arabidopsis thaliana, containing image data and cell segmentations.
+    documentation: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main/dataset_src/arabidopsis_tissue_atlas.md
+    format_version: 0.2.1
+    name: Arabidopsis 3D Digital Tissue Atlas
+    source: https://osf.io/fzr56/
+    tags: [light-microscopy, arabidopsis, cells, instance-segmentation, 3D]
+    type: dataset
   - id: vnc
     authors:
     - {name: Constantin Pape}
