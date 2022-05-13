@@ -115,7 +115,7 @@ collection:
     source: https://cremi.org/
     tags: [electron-microscopy, brain, neurons, instance-segmentation, cremi-challenge, 3D]
     type: dataset
-  - id: stradist_dsb_training_data
+  - id: stardist_dsb_training_data
     authors:
     - {name: Constantin Pape}
     cite:
