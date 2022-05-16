@@ -1,6 +1,3 @@
-{bioimageio_core_version: 0.5.3post2, bioimageio_spec_version: 0.4.5post6, error: "Output
-    and expected output disagree:\n \nArrays are not almost equal to 4 decimals\n\nMismatched
-    elements: 15540 / 160000 (9.71%)\nMax absolute difference: 255.\nMax relative
-    difference: 1.\n x: array([[[[0.],\n         [0.],\n         [0.],...\n y: array([[[[0],\n
-    \        [0],\n         [0],...", name: reproduce test outputs with ilastik 1.4.0b27
-    using tensorflow_saved_model_bundle weights, reason: error, status: failed, traceback: null}
+{bioimageio_core_version: 0.5.3post2, bioimageio_spec_version: 0.4.5post6, error: null,
+  name: reproduce test outputs with ilastik 1.4.0b27 using tensorflow_saved_model_bundle
+    weights, reason: null, status: passed, traceback: null}
