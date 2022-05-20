@@ -137,7 +137,8 @@ async function downloadModel(rootUrl, spec, weightsFormat, showMessage, showProg
   // deprecate this after v0.4.0
   // TODO: Fix the leading ./ in the python library
   if(spec.source && spec.source.includes(':')){
-    const src = spec.source.split(':')[0] // e.g. ./mynetwork:UNet
+    const tmp = spec.source.split(':');
+    const src = tmp.slice(0, tmp.length-1).join(":") // e.g. ./mynetwork:UNet
     files.push(src)
     // exportSpec.source = getFileName(src)
     // HACK: leave field in exportSpec unchanged, bioimageio.spec currently only
