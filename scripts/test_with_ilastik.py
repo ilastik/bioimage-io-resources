@@ -66,6 +66,7 @@ def write_test_summaries(rdf_dir: Path, resource_id: str, version_id: str, summa
                 summary = dict(error=str(e), traceback=traceback.format_tb(e.__traceback__))
 
             summary["name"] = f"{test_name} using {weight_format} weights"
+            summary["status"] = "exception"
             write_summary(summaries_dir / rd_id / f"test_summary_{weight_format}_{postfix}.yaml", **summary)
 
 
