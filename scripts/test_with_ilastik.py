@@ -1,26 +1,34 @@
 import traceback
 from pathlib import Path
-from typing import Optional
+from typing import List
 
 import typer
-
+from bioimageio.core import __version__ as bioimageio_core_version
+from bioimageio.core.common import TestSummary
 from bioimageio.core.resource_tests import test_model
+from bioimageio.spec import __version__ as bioimageio_spec_version
 from bioimageio.spec.shared import yaml
 
 
-def write_summary(
-    p: Path, *, name: str, status: str, error: Optional[str] = None, **other
+def write_summaries(
+    p: Path,
+    summaries: List[TestSummary],
 ):
     p.parent.mkdir(parents=True, exist_ok=True)
-    if status == "failed":
-        assert error is not None
-    elif status != "passed":
-        assert error is not None
-
-    yaml.dump(dict(name=name, status=status, error=error, **other), p)
+    yaml.dump(summaries, p)
 
 
-def write_test_summaries(rdf_dir: Path, resource_id: str, version_id: str, summaries_dir: Path, postfix: str):
+def run_tests(
+    rdf_dir: Path, resource_id: str, version_id: str, summaries_dir: Path, postfix: str
+):
+
+    summary_defaults = {
+        "bioimageio_spec_version": bioimageio_spec_version,
+        "bioimageio_core_version": bioimageio_core_version,
+        "warnings": {},
+        "nested_errors": None,
+    }
+
     for rdf_path in rdf_dir.glob(f"{resource_id}/{version_id}/rdf.yaml"):
         test_name = f"reproduce test outputs with ilastik {postfix}"
         error = None
@@ -52,22 +60,39 @@ def write_test_summaries(rdf_dir: Path, resource_id: str, version_id: str, summa
 
         if status:
             # write single test summary
-            write_summary(
-                summaries_dir / rd_id / f"test_summary_{postfix}.yaml", name=test_name, status=status, error=error
+            summaries = [
+                TestSummary(
+                    dict(
+                        name=test_name,
+                        status=status,
+                        error=error,
+                        source_name=str(rdf_path),
+                        **summary_defaults,
+                    )
+                )
+            ]
+            write_summaries(
+                summaries_dir / rd_id / f"test_summary_{postfix}.yaml", summaries
             )
             continue
 
         # write test summary for each weight format
         for weight_format in weight_formats:
             try:
-                summary = test_model(rdf_path, weight_format=weight_format)
+                summaries = test_model(rdf_path, weight_format=weight_format)
             except Exception as e:
-                summary = dict(error=str(e), traceback=traceback.format_tb(e.__traceback__))
+                summary = dict(
+                    error=str(e), traceback=traceback.format_tb(e.__traceback__)
+                )
 
                 summary["name"] = f"{test_name} using {weight_format} weights"
                 summary["status"] = "failed"
+                summaries = [TestSummary(**summary, **summary_defaults)]
 
-            write_summary(summaries_dir / rd_id / f"test_summary_{weight_format}_{postfix}.yaml", **summary)
+            write_summaries(
+                summaries_dir / rd_id / f"test_summary_{weight_format}_{postfix}.yaml",
+                summaries,
+            )
 
 
 def main(
@@ -75,16 +100,16 @@ def main(
     resource_id: str,
     version_id: str = "**",
     rdf_dir: Path = Path(__file__).parent / "../bioimageio-gh-pages/rdfs",
-    postfix: str = ""
+    postfix: str = "",
 ):
-    """ preliminary ilastik check
+    """preliminary ilastik check
 
     only checks if test outputs are reproduced for onnx, torchscript, or pytorch_state_dict weights.
 
     """
     summaries_dir = dist / "test_summaries"
     summaries_dir.mkdir(parents=True, exist_ok=True)
-    write_test_summaries(rdf_dir, resource_id, version_id, summaries_dir, postfix)
+    run_tests(rdf_dir, resource_id, version_id, summaries_dir, postfix)
 
 
 if __name__ == "__main__":
