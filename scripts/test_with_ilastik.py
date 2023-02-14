@@ -9,16 +9,15 @@ from bioimageio.spec.shared import yaml
 
 
 def write_summary(
-    p: Path, *, name: str, status: str, error: Optional[str] = None, reason: Optional[str] = None, **other
+    p: Path, *, name: str, status: str, error: Optional[str] = None, **other
 ):
     p.parent.mkdir(parents=True, exist_ok=True)
     if status == "failed":
-        reason = "error"
         assert error is not None
     elif status != "passed":
-        assert reason is not None
+        assert error is not None
 
-    yaml.dump(dict(name=name, status=status, error=error, reason=reason, **other), p)
+    yaml.dump(dict(name=name, status=status, error=error, **other), p)
 
 
 def write_test_summaries(rdf_dir: Path, resource_id: str, version_id: str, summaries_dir: Path, postfix: str):
@@ -26,7 +25,7 @@ def write_test_summaries(rdf_dir: Path, resource_id: str, version_id: str, summa
         test_name = f"reproduce test outputs with ilastik {postfix}"
         error = None
         status = None
-        reason = None
+
         try:
             rdf = yaml.load(rdf_path)
         except Exception as e:
@@ -44,7 +43,7 @@ def write_test_summaries(rdf_dir: Path, resource_id: str, version_id: str, summa
 
         if rdf.get("type") != "model":
             status = "skipped"
-            reason = "not a model RDF"
+            error = "not a model RDF"
 
         weight_formats = list(rdf.get("weights", []))
         if not isinstance(weight_formats, list) or not weight_formats:
@@ -54,7 +53,7 @@ def write_test_summaries(rdf_dir: Path, resource_id: str, version_id: str, summa
         if status:
             # write single test summary
             write_summary(
-                summaries_dir / rd_id / f"test_summary_{postfix}.yaml", name=test_name, status=status, error=error, reason=reason
+                summaries_dir / rd_id / f"test_summary_{postfix}.yaml", name=test_name, status=status, error=error
             )
             continue
 
@@ -66,7 +65,7 @@ def write_test_summaries(rdf_dir: Path, resource_id: str, version_id: str, summa
                 summary = dict(error=str(e), traceback=traceback.format_tb(e.__traceback__))
 
             summary["name"] = f"{test_name} using {weight_format} weights"
-            summary["status"] = "exception"
+            summary["status"] = "failed"
             write_summary(summaries_dir / rd_id / f"test_summary_{weight_format}_{postfix}.yaml", **summary)
 
 
