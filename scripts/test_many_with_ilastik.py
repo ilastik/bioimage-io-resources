@@ -5,7 +5,7 @@ from typing import Dict, Union
 
 import typer
 
-from test_with_ilastik import write_test_summaries
+from test_with_ilastik import run_tests
 
 
 def iterate_over_gh_matrix(matrix: Union[str, Dict[str, list]]):
@@ -45,7 +45,7 @@ def main(
         resource_id = matrix["resource_id"]
         version_id = matrix["version_id"]
 
-        write_test_summaries(rdf_dir, resource_id, version_id, summaries_dir, postfix)
+        run_tests(rdf_dir, resource_id, version_id, summaries_dir, postfix)
 
 
 if __name__ == "__main__":
