@@ -1,0 +1,38 @@
+- bioimageio_core_version: 0.5.8
+  bioimageio_spec_version: 0.4.9
+  error: null
+  name: load resource description
+  nested_errors: null
+  source_name: scripts/../bioimageio-gh-pages/rdfs/10.5281/zenodo.6811491/6811492/rdf.yaml
+  status: passed
+  traceback: null
+  warnings: {}
+- {error: null, name: has expected resource type, source_name: 10.5281/zenodo.6811491/6811492,
+  status: passed, traceback: null}
+- bioimageio_core_version: 0.5.8
+  bioimageio_spec_version: 0.4.9
+  error: null
+  name: All URLs and paths available
+  nested_errors: null
+  source_name: 10.5281/zenodo.6811491/6811492
+  status: passed
+  traceback: null
+  warnings: {}
+- bioimageio_core_version: 0.5.8
+  bioimageio_spec_version: 0.4.9
+  error: null
+  name: Test documentation completeness.
+  source_name: 10.5281/zenodo.6811491/6811492
+  status: passed
+  traceback: null
+  warnings: {documentation: No '# Validation' (sub)section found.}
+- bioimageio_core_version: 0.5.8
+  bioimageio_spec_version: 0.4.9
+  error: null
+  name: reproduce test outputs from test inputs
+  source_name: 10.5281/zenodo.6811491/6811492
+  status: passed
+  traceback: null
+  warnings:
+    non-validation-warnings: [Computed dataset percentiles naively by averaging percentiles
+        of samples.]
