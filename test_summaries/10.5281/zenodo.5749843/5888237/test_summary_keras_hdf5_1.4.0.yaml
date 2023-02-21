@@ -45,7 +45,7 @@
       custom_objects, compile)\n", "  File \"/usr/share/miniconda3/envs/ilastik-env/lib/python3.7/site-packages/tensorflow/python/keras/saving/hdf5_format.py\",
       line 210, in load_model_from_hdf5\n    model_config = json.loads(model_config.decode('utf-8'))\n"]
   warnings:
-    non-validation-warnings: ['Passing (type, 1) or ''1type'' as a synonym of type
-        is deprecated; in a future version of numpy, it will be understood as (type,
-        (1,)) / ''(1,)type''.', 'Model tensorflow version (1, 15) does not match 1.14.0.The
-        prediction results may be wrong']
+    non-validation-warnings: ['Model tensorflow version (1, 15) does not match 1.14.0.The
+        prediction results may be wrong', 'Passing (type, 1) or ''1type'' as a synonym
+        of type is deprecated; in a future version of numpy, it will be understood
+        as (type, (1,)) / ''(1,)type''.']
