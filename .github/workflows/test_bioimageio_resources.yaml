@@ -11,6 +11,9 @@ on:
         default: '{"include": [{"resource_id": "**", "version_id": "**"}]}'
         type: string
 
+env:
+  BIOIMAGEIO_COUNT_RDF_DOWNLOADS: 'false'
+
 jobs:
   setup:
     runs-on: ubuntu-latest
