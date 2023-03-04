@@ -2,18 +2,18 @@
   bioimageio_spec_version: 0.4.8
   error: null
   name: load resource description
-  source_name: scripts/../bioimageio-gh-pages/rdfs/10.5281/zenodo.5749843/5888237/rdf.yaml
+  source_name: scripts/../bioimageio-gh-pages/rdfs/10.5281/zenodo.7261974/7688940/rdf.yaml
   status: passed
   traceback: null
   warnings: {}
-- {error: null, name: has expected resource type, source_name: 10.5281/zenodo.5749843/5888237,
+- {error: null, name: has expected resource type, source_name: 10.5281/zenodo.7261974/7688940,
   status: passed, traceback: null}
 - bioimageio_core_version: 0.5.7
   bioimageio_spec_version: 0.4.8
   error: null
   name: All URLs and paths available
   nested_errors: null
-  source_name: 10.5281/zenodo.5749843/5888237
+  source_name: 10.5281/zenodo.7261974/7688940
   status: passed
   traceback: null
   warnings: {}
@@ -21,7 +21,7 @@
   bioimageio_spec_version: 0.4.8
   error: null
   name: Test documentation completeness.
-  source_name: 10.5281/zenodo.5749843/5888237
+  source_name: 10.5281/zenodo.7261974/7688940
   status: passed
   traceback: null
   warnings: {documentation: No '# Validation' (sub)section found.}
@@ -29,7 +29,7 @@
   bioimageio_spec_version: 0.4.8
   error: '''str'' object has no attribute ''decode'''
   name: reproduce test outputs from test inputs
-  source_name: 10.5281/zenodo.5749843/5888237
+  source_name: 10.5281/zenodo.7261974/7688940
   status: failed
   traceback: ["  File \"/usr/share/miniconda3/envs/ilastik-env/lib/python3.7/site-packages/bioimageio/core/resource_tests.py\",
       line 157, in _test_model_inference\n    bioimageio_model=model, devices=devices,
@@ -44,7 +44,5 @@
       custom_objects, compile)\n", "  File \"/usr/share/miniconda3/envs/ilastik-env/lib/python3.7/site-packages/tensorflow/python/keras/saving/hdf5_format.py\",
       line 210, in load_model_from_hdf5\n    model_config = json.loads(model_config.decode('utf-8'))\n"]
   warnings:
-    non-validation-warnings: ['Passing (type, 1) or ''1type'' as a synonym of type
-        is deprecated; in a future version of numpy, it will be understood as (type,
-        (1,)) / ''(1,)type''.', 'Model tensorflow version (1, 15) does not match 1.14.0.The
+    non-validation-warnings: ['Model tensorflow version (2, 11) does not match 1.14.0.The
         prediction results may be wrong']

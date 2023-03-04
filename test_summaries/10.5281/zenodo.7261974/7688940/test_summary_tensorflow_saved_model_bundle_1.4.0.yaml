@@ -3,18 +3,18 @@
   error: null
   name: load resource description
   nested_errors: null
-  source_name: scripts/../bioimageio-gh-pages/rdfs/10.5281/zenodo.7380171/7405349/rdf.yaml
+  source_name: scripts/../bioimageio-gh-pages/rdfs/10.5281/zenodo.7261974/7688940/rdf.yaml
   status: passed
   traceback: null
   warnings: {}
-- {error: null, name: has expected resource type, source_name: 10.5281/zenodo.7380171/7405349,
+- {error: null, name: has expected resource type, source_name: 10.5281/zenodo.7261974/7688940,
   status: passed, traceback: null}
 - bioimageio_core_version: 0.5.8
   bioimageio_spec_version: 0.4.9
   error: null
   name: All URLs and paths available
   nested_errors: null
-  source_name: 10.5281/zenodo.7380171/7405349
+  source_name: 10.5281/zenodo.7261974/7688940
   status: passed
   traceback: null
   warnings: {}
@@ -22,7 +22,7 @@
   bioimageio_spec_version: 0.4.9
   error: null
   name: Test documentation completeness.
-  source_name: 10.5281/zenodo.7380171/7405349
+  source_name: 10.5281/zenodo.7261974/7688940
   status: passed
   traceback: null
   warnings: {documentation: No '# Validation' (sub)section found.}
@@ -31,7 +31,7 @@
   error: The name '' looks like an (invalid) Operation name, not a Tensor. Tensor
     names must be of the form "<op_name>:<output_index>".
   name: reproduce test outputs from test inputs
-  source_name: 10.5281/zenodo.7380171/7405349
+  source_name: 10.5281/zenodo.7261974/7688940
   status: failed
   traceback: ["  File \"/usr/share/miniconda3/envs/ilastik-env/lib/python3.7/site-packages/bioimageio/core/resource_tests.py\",
       line 159, in _test_model_inference\n    results = predict(prediction_pipeline,
@@ -54,6 +54,7 @@
       allow_tensor, allow_operation)\n", "  File \"/usr/share/miniconda3/envs/ilastik-env/lib/python3.7/site-packages/tensorflow/python/framework/ops.py\",
       line 3870, in _as_graph_element_locked\n    raise ValueError(err_msg)\n"]
   warnings:
-    non-validation-warnings: ['Model tensorflow version (2, 10) does not match 1.14.0.The
-        prediction results may be wrong', 'Device management is not implemented for
-        keras yet, cannot unload model']
+    non-validation-warnings: ['Device management is not implemented for keras yet,
+        cannot unload model', 'Model tensorflow version (2, 11) does not match 1.14.0.The
+        prediction results may be wrong', Computed dataset percentiles naively by
+        averaging percentiles of samples.]
