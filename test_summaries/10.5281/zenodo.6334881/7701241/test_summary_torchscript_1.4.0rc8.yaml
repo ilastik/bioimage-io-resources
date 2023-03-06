@@ -2,18 +2,18 @@
   bioimageio_spec_version: 0.4.8
   error: null
   name: load resource description
-  source_name: scripts/../bioimageio-gh-pages/rdfs/10.5281/zenodo.6348728/6348729/rdf.yaml
+  source_name: scripts/../bioimageio-gh-pages/rdfs/10.5281/zenodo.6334881/7701241/rdf.yaml
   status: passed
   traceback: null
   warnings: {}
-- {error: null, name: has expected resource type, source_name: 10.5281/zenodo.6348728/6348729,
+- {error: null, name: has expected resource type, source_name: 10.5281/zenodo.6334881/7701241,
   status: passed, traceback: null}
 - bioimageio_core_version: 0.5.7
   bioimageio_spec_version: 0.4.8
   error: null
   name: All URLs and paths available
   nested_errors: null
-  source_name: 10.5281/zenodo.6348728/6348729
+  source_name: 10.5281/zenodo.6334881/7701241
   status: passed
   traceback: null
   warnings: {}
@@ -21,7 +21,7 @@
   bioimageio_spec_version: 0.4.8
   error: null
   name: Test documentation completeness.
-  source_name: 10.5281/zenodo.6348728/6348729
+  source_name: 10.5281/zenodo.6334881/7701241
   status: passed
   traceback: null
   warnings: {documentation: No '# Validation' (sub)section found.}
@@ -29,11 +29,7 @@
   bioimageio_spec_version: 0.4.8
   error: null
   name: reproduce test outputs from test inputs
-  source_name: 10.5281/zenodo.6348728/6348729
+  source_name: 10.5281/zenodo.6334881/7701241
   status: passed
   traceback: null
-  warnings:
-    non-validation-warnings: ['Device management is not implemented for keras yet,
-        cannot unload model', 'Model tensorflow version (1, 15) does not match 1.14.0.The
-        prediction results may be wrong', Computed dataset percentiles naively by
-        averaging percentiles of samples.]
+  warnings: {}
