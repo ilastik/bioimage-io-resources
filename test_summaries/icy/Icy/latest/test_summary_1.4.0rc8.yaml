@@ -1,0 +1,8 @@
+- bioimageio_core_version: 0.5.7
+  bioimageio_spec_version: 0.4.8
+  error: Missing/invalid weight formats for icy/Icy/latest
+  name: reproduce test outputs with ilastik 1.4.0rc8
+  nested_errors: null
+  source_name: scripts/../bioimageio-gh-pages/rdfs/icy/Icy/latest/rdf.yaml
+  status: failed
+  warnings: {}
