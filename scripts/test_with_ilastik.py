@@ -18,19 +18,15 @@ def write_summaries(
     yaml.dump(summaries, p)
 
 
-def run_tests(
-    rdf_dir: Path, resource_id: str, version_id: str, summaries_dir: Path, postfix: str
-):
-
+def run_tests(rdf_dir: Path, resource_id: str, version_id: str, summaries_dir: Path, postfix: str):
     summary_defaults = {
         "bioimageio_spec_version": bioimageio_spec_version,
         "bioimageio_core_version": bioimageio_core_version,
         "warnings": {},
-        "nested_errors": None,
     }
 
     for rdf_path in rdf_dir.glob(f"{resource_id}/{version_id}/rdf.yaml"):
-        test_name = f"reproduce test outputs with ilastik {postfix}"
+        test_name = f"Reproduce test outputs with ilastik {postfix}"
         error = None
         status = None
 
@@ -71,28 +67,61 @@ def run_tests(
                     )
                 )
             ]
-            write_summaries(
-                summaries_dir / rd_id / f"test_summary_{postfix}.yaml", summaries
-            )
+            write_summaries(summaries_dir / rd_id / f"test_summary_{postfix}.yaml", summaries)
             continue
 
-        # write test summary for each weight format
+        # produce test summaries for each weight format
+        summaries_per_weight_format = {}
         for weight_format in weight_formats:
             try:
-                summaries = test_model(rdf_path, weight_format=weight_format)
+                summaries_weight_format = test_model(rdf_path, weight_format=weight_format)
             except Exception as e:
-                summary = dict(
-                    error=str(e), traceback=traceback.format_tb(e.__traceback__)
-                )
+                summaries_weight_format = [
+                    TestSummary(
+                        name=test_name,
+                        status="failed",
+                        error=str(e),
+                        traceback=traceback.format_tb(e.__traceback__),
+                        **summary_defaults,
+                    )
+                ]
 
-                summary["name"] = f"{test_name} using {weight_format} weights"
-                summary["status"] = "failed"
-                summaries = [TestSummary(**summary, **summary_defaults)]
+            summaries_per_weight_format[weight_format] = summaries_weight_format
 
-            write_summaries(
-                summaries_dir / rd_id / f"test_summary_{weight_format}_{postfix}.yaml",
-                summaries,
-            )
+        assert summaries_per_weight_format
+        # merge test weight format summaries to one ilastik summary
+        passed_reproduced_summaries = []
+        failed_reproduced_summaries = []
+        other_summaries = []
+        seen_tests = set()
+        for wf, s in summaries_per_weight_format.items():
+            for ss in s:
+                is_other = ss["name"].lower() != "reproduce test outputs from test inputs"
+                if is_other:
+                    # filter out redundant, wf independent tests summaries
+                    if str(ss) in seen_tests:
+                        continue
+
+                    seen_tests.add(str(ss))
+
+                if is_other:
+                    ss["name"] = f"{ss['name']} ({wf})"
+                    other_summaries.append(ss)
+                    continue
+
+                ss["name"] = f"{test_name} ({wf})"
+                if ss["status"] == "passed":
+                    passed_reproduced_summaries.append(ss)
+                else:
+                    failed_reproduced_summaries.append(ss)
+
+        chosen_summaries = passed_reproduced_summaries or failed_reproduced_summaries or other_summaries
+        # todo: save failed tests also if other pass. we filter them out for now to not falsely conclude that a model
+        #  cannot be run in ilastik only because some of the tests failed (while others passed)
+        write_summaries(
+            summaries_dir / rd_id / f"test_summary_{postfix}.yaml",
+            chosen_summaries,
+        )
 
 
 def main(
