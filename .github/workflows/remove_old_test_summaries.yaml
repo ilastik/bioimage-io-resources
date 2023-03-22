@@ -11,7 +11,7 @@ on:
         default: '1.4.0b26'
         type: string
       dry_run:
-        description: 'do not delete, only list matching test summary files'
+        description: 'dy run'
         required: true
         default: true
         type: boolean
@@ -25,8 +25,11 @@ jobs:
       with:
         ref: gh-pages
         path: gh-pages
+    - name: list matching test summaries
+      run: find gh-pages -name '*${{ github.event.inputs.version }}.yaml'
     - name: delete matching test summaries
-      run: find . -name '*${{ github.event.inputs.version }}.yaml' -delete
+      if: ${{ !github.event.inputs.dry_run }}
+      run: find gh-pages -name '*${{ github.event.inputs.version }}.yaml' -delete
     - name: Deploy to gh-pages 🚀
       if: ${{ !github.event.inputs.dry_run }}
       uses: JamesIves/github-pages-deploy-action@v4.4.1
