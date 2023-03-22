@@ -33,7 +33,9 @@
   status: passed
   traceback: null
   warnings:
-    non-validation-warnings: ['Model tensorflow version (1, 15) does not match 1.14.0.The
-        prediction results may be wrong', 'Device management is not implemented for
-        keras yet, cannot unload model', Computed dataset percentiles naively by averaging
-        percentiles of samples.]
+    non-validation-warnings: [Computed dataset percentiles naively by averaging percentiles
+        of samples., 'Passing (type, 1) or ''1type'' as a synonym of type is deprecated;
+        in a future version of numpy, it will be understood as (type, (1,)) / ''(1,)type''.',
+      'Device management is not implemented for keras yet, cannot unload model', 'Model
+        tensorflow version (1, 15) does not match 1.14.0.The prediction results may
+        be wrong']
