@@ -26,10 +26,10 @@ jobs:
         ref: gh-pages
         path: gh-pages
     - name: list matching test summaries
-      run: find gh-pages -name '*${{ github.event.inputs.version }}.yaml'
+      run: cd gh-pages/test_summaries && find . -name '*${{ github.event.inputs.version }}.yaml'
     - name: delete matching test summaries
       if: ${{ !github.event.inputs.dry_run }}
-      run: find gh-pages -name '*${{ github.event.inputs.version }}.yaml' -delete
+      run: cd gh-pages/test_summaries && find . -name '*${{ github.event.inputs.version }}.yaml' -delete
     - name: Deploy to gh-pages 🚀
       if: ${{ !github.event.inputs.dry_run }}
       uses: JamesIves/github-pages-deploy-action@v4.4.1
