@@ -1,0 +1,36 @@
+name: remove old test summaries
+
+concurrency: test-resources
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'version postifx'
+        required: true
+        default: '1.4.0b26'
+        type: string
+      dry_run:
+        description: 'do not delete, only list matching test summary files'
+        required: true
+        default: true
+        type: boolean
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/checkout@v3
+      with:
+        ref: gh-pages
+        path: gh-pages
+    - name: delete matching test summaries
+      run: find . -name '*${{ github.event.inputs.version }}.yaml' -delete
+    - name: Deploy to gh-pages 🚀
+      if: ${{ !github.event.inputs.dry_run }}
+      uses: JamesIves/github-pages-deploy-action@v4.4.1
+      with:
+        clean: true
+        branch: gh-pages
+        folder: gh-pages
