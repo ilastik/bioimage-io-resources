@@ -57,6 +57,7 @@ collection:
       - text: "Berg, S., Kutra, D., Kroeger, T. et al. ilastik: interactive machine learning for (bio)image analysis. Nat Methods 16, 1226-1232 (2019)."
         doi: 10.1038/s41592-019-0582-9
     documentation: https://raw.githubusercontent.com/ilastik/ilastik/main/Readme.md
+    license: GPL-3.0-or-later
   - id: mws-segmentation
     name: Mutex Watershed Plugin
     description: "Segmentation plugin for models that predict pixel affinities"
