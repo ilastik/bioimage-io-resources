@@ -40,6 +40,14 @@ config:  # todo: clean up config (which of these fields are still used?)
     - application
   default_type: model
   url_root: https://raw.githubusercontent.com/ilastik/bioimage-io-models/main
+  docs: https://www.ilastik.org/documentation/index.html
+  contact:
+    - name: Anna Kreshuk
+      email: anna.kreshuk@embl.de
+      github: akreshuk
+      affiliation:
+        - name: EMBL
+					url: https://www.embl.org
 
 collection:
   - id: ilastik
