@@ -47,7 +47,7 @@ config:  # todo: clean up config (which of these fields are still used?)
       github: akreshuk
       affiliation:
         - name: EMBL
-					url: https://www.embl.org
+	  url: https://www.embl.org
 
 collection:
   - id: ilastik
