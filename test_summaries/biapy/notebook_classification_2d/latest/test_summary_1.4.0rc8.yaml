@@ -1,0 +1,7 @@
+- bioimageio_core_version: 0.5.7
+  bioimageio_spec_version: 0.4.8
+  error: Missing/invalid weight formats for biapy/notebook_classification_2d/latest
+  name: Reproduce test outputs with ilastik 1.4.0rc8
+  source_name: scripts/../bioimageio-gh-pages/rdfs/biapy/notebook_classification_2d/latest/rdf.yaml
+  status: failed
+  warnings: {}
