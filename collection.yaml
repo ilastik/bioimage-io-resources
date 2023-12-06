@@ -29,6 +29,7 @@ config:  # todo: clean up config (which of these fields are still used?)
   name: ilastik
   tags:
     - ilastik
+    - software
   logo: https://raw.githubusercontent.com/ilastik/bioimage-io-resources/main/image/ilastik-fist-icon.png
   icon: https://raw.githubusercontent.com/ilastik/bioimage-io-resources/main/image/ilastik-fist-icon.png
   splash_title: ilastik
