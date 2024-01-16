@@ -1,0 +1,7 @@
+- bioimageio_core_version: 0.5.8
+  bioimageio_spec_version: 0.4.9
+  error: Missing/invalid weight formats for dl4miceverywhere/DL4MicEverywhere/latest
+  name: Reproduce test outputs with ilastik 1.4.0
+  source_name: scripts/../bioimageio-gh-pages/rdfs/dl4miceverywhere/DL4MicEverywhere/latest/rdf.yaml
+  status: failed
+  warnings: {}
