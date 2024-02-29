@@ -26,9 +26,10 @@ jobs:
       shell: python
       run: |
         import json
+        import os
         pm = json.loads('${{ github.event.inputs.pending_matrix }}')
-        print(f"::set-output is_empty={'no' if pm['include'] else 'yes'}")
-
+        with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
+            print(f"is_empty={'no' if pm['include'] else 'yes'}", file=fh)
     - name: download version list
       if: steps.pending_empty.outputs.is_empty == 'no'
       run: wget https://files.ilastik.org/ilastik-versions-bmz.json
@@ -38,12 +39,14 @@ jobs:
       shell: python
       run: |
         import json
+        import os
 
         with open("ilastik-versions-bmz.json") as f:
             vs = json.load(f)
 
         version_matrix = dict(include=[dict(v=v, env_url=f"https://files.ilastik.org/ilastik-{v}-Linux.yml") for v in vs])
-        print(f"::set-output name=version_matrix::{version_matrix}")
+        with open(os.environ["GITHUB_OUTPUT"], "a") as fh:
+          print(f"version_matrix={version_matrix}", file=fh)
 
   run:
     runs-on: ubuntu-latest
@@ -54,68 +57,23 @@ jobs:
       matrix: ${{ fromJson(needs.setup.outputs.version_matrix) }}
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+    - uses: actions/checkout@v3
       with:
         repository: bioimage-io/collection-bioimage-io
         ref: gh-pages
         path: bioimageio-gh-pages
-    - name: Setup ilastik env
-      uses: conda-incubator/setup-miniconda@v2
-      with:
-          miniforge-variant: Mambaforge
-          miniforge-version: latest
-          activate-environment: ilastik-env
-          use-mamba: true
-    - name: Cache ilastik env
-      uses: actions/cache@v2
-      with:
-        path: ${{ env.CONDA }}/envs
-        key: conda-${{ runner.os }}--${{ runner.arch }}--${{ matrix.v }}-${{ env.CACHE_NUMBER }}
-      env:
-        # Increase this value to reset cache if etc/example-environment.yml has not changed
-        CACHE_NUMBER: 0
-      id: cache
     - name: Download ilastik env
-      if: steps.cache.outputs.cache-hit != 'true'
       run: wget --output-document env.yaml ${{ matrix.env_url }}
-    - run: pip install ruamel.yaml  # not in the conda env
-      if: steps.cache.outputs.cache-hit != 'true'
-    - run: which python
-    - run: which python
-      shell: bash -l {0}
     - name: ignore unrelated packages
-      if: steps.cache.outputs.cache-hit != 'true'
-      shell: python  # not the conda env
-      run: |
-        from pathlib import Path
-        from ruamel.yaml import YAML
-
-        yaml = YAML(typ="safe")
-
-        with Path("env.yaml").open() as f:
-          env = yaml.load(f)
-
-        ignore_deps = ["multi-hypotheses-tracking-with-gurobi", "gurobi-symlink"]
-        ignored = []
-        remaining = []
-        for d in env["dependencies"]:
-          if d.split("=")[0] in ignore_deps:
-            ignored.append(d)
-          else:
-            remaining.append(d)
-
-        print("ignored", ignored)
-        env["dependencies"] = remaining
-
-        with Path("env.yaml").open("w") as f:
-          yaml.dump(env, f)
-
-    - name: Update environment
-      shell: bash -l {0}
-      if: steps.cache.outputs.cache-hit != 'true'
-      run: mamba env update -n ilastik-env -f env.yaml
-    - name: test with ilastik ${{matrix.v }}
+      run: sed -i '/multi-hypotheses-tracking-with-gurobi/d; /gurobi-symlink/d' env.yaml
+    - name: Setup ilastik env
+      uses: mamba-org/setup-micromamba@v1
+      with:
+        environment-file: env.yaml
+        cache-downloads: true
+        cache-environment: true
+    - name: test with ilastik ${{ matrix.v }}
       shell: bash -l {0}
       run: python scripts/test_many_with_ilastik.py dist '${{ github.event.inputs.pending_matrix }}' --postfix ${{ matrix.v }}
     - name: Upload test summaries
