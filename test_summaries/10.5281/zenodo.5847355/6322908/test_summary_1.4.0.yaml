@@ -1,0 +1,8 @@
+- bioimageio_core_version: 0.5.8
+  bioimageio_spec_version: 0.4.9
+  error: null
+  name: Reproduce test outputs with ilastik 1.4.0 (torchscript)
+  source_name: 10.5281/zenodo.5847355/6322908
+  status: passed
+  traceback: null
+  warnings: {}
