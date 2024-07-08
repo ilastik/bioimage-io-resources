@@ -1,9 +1,0 @@
-name: ilastik-cpu
-channels:
-  - pytorch
-  - ilastik-forge
-  - conda-forge
-dependencies:
-  - python=3.7
-  - pytorch=1.9
-  - onnxruntime
