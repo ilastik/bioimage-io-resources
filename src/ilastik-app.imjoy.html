@@ -189,6 +189,45 @@ async function downloadModel(rootUrl, spec, weightsFormat, showMessage, showProg
       }
   }
 
+  // for 0.5.3, test_inputs and test_outputs and sample_inputs and sample_outputs has been moved to inputs and outputs
+  for(let input of spec.inputs){
+      if(input.test_tensor){
+          if(await fileExists(rootUrl, input.test_tensor.source)){
+              files.push(input.test_tensor.source)
+          }
+          else{
+              showWarning("File not found: " + input.test_tensor.source)
+          }
+      }
+      if(input.sample_tensor){
+          if(await fileExists(rootUrl, input.sample_tensor.source)){
+              files.push(input.sample_tensor.source)
+          }
+          else{
+              showWarning("File not found: " + input.sample_tensor.source)
+          }
+      }
+  }
+    
+  for(let output of spec.outputs){
+      if(output.test_tensor){
+          if(await fileExists(rootUrl, output.test_tensor.source)){
+              files.push(output.test_tensor.source)
+          }
+          else{
+              showWarning("File not found: " + output.test_tensor.source)
+          }
+      }
+      if(output.sample_tensor){
+          if(await fileExists(rootUrl, output.sample_tensor.source)){
+              files.push(output.sample_tensor.source)
+          }
+          else{
+              showWarning("File not found: " + output.sample_tensor.source)
+          }
+      }
+  }
+
   if(spec.covers && Array.isArray(spec.covers)){
     files = files.concat(spec.covers)
     for(let i=0;i<spec.covers.length;i++){
