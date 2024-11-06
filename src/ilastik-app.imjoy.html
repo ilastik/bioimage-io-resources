@@ -170,9 +170,15 @@ async function downloadModel(rootUrl, spec, weightsFormat, showMessage, showProg
       }
       exportSpec.weights[weightsFormat].architecture = wformat.architecture
     }
-    if(wformat.dependencies && wformat.dependencies.includes(':')){
-      const dep = wformat.dependencies.split(':').slice(1).join(":") // e.g. pip:./requirements.txt
-      files.push(dep)
+    if(wformat.dependencies){
+      if(typeof wformat.dependencies === 'string'){
+        const dep = wformat.dependencies.split(':').slice(1).join(":") // e.g. pip:./requirements.txt
+        files.push(dep)
+      }
+      else {
+        const dep = wformat.dependencies.source.split(':').slice(1).join(":") // e.g. pip:./requirements.txt
+        files.push(dep)
+      }
       exportSpec.weights[weightsFormat].dependencies = wformat.dependencies
     }
   }
