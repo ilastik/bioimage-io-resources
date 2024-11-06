@@ -17,10 +17,10 @@
       "https://static.imjoy.io/spectre.css/spectre.min.css",
       "https://static.imjoy.io/spectre.css/spectre-exp.min.css",
       "https://static.imjoy.io/spectre.css/spectre-icons.min.css",
-      "https://static.imjoy.io/js/UZIP.js",
       "https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.0.0/js-yaml.min.js",
-      "https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js"
-  ],
+      "https://cdnjs.cloudflare.com/ajax/libs/axios/0.27.2/axios.min.js",
+      "https://static.imjoy.io/js/UZIP.js"
+ ],
   "dependencies": [],
   "defaults": {"w": 20, "h": 10},
   "runnable": true
@@ -84,11 +84,11 @@ async function resolveUrl(rootUrl, url){
     return url
 }
 
-
 function getFileName(url){
   const parts = url.split('/');
-  // Remove the last element 'content'
-  parts.pop();
+  if(parts[parts.length-1] === "content")
+      // Remove the last element 'content'
+      parts.pop();
   // Take the last element which should be the file name
   return './' + parts.pop().split('#')[0].split('?')[0];
 }
@@ -142,8 +142,7 @@ async function downloadModel(rootUrl, spec, weightsFormat, showMessage, showProg
   // deprecate this after v0.4.0
   // TODO: Fix the leading ./ in the python library
   if(spec.source && spec.source.includes(':')){
-    const tmp = spec.source.split(':');
-    const src = tmp.slice(0, tmp.length-1).join(":") // e.g. ./mynetwork:UNet
+    const src = spec.source.split(':')[0] // e.g. ./mynetwork:UNet
     files.push(src)
     // exportSpec.source = getFileName(src)
     // HACK: leave field in exportSpec unchanged, bioimageio.spec currently only
@@ -194,8 +193,8 @@ async function downloadModel(rootUrl, spec, weightsFormat, showMessage, showProg
         }
       }
   }
-
-  // for 0.5.3, test_inputs and test_outputs and sample_inputs and sample_outputs has been moved to inputs and outputs
+    
+ // for 0.5.3, test_inputs and test_outputs and sample_inputs and sample_outputs has been moved to inputs and outputs
   for(let input of spec.inputs){
       if(input.test_tensor){
           if(await fileExists(rootUrl, input.test_tensor.source)){
@@ -269,7 +268,8 @@ async function downloadModel(rootUrl, spec, weightsFormat, showMessage, showProg
   console.time("zipping")
   const zipBlob = new Blob([UZIP.encode(files2zip, true)]);
   console.timeEnd('zipping')
-  await api.exportFile(zipBlob, spec.name.replace(/\s+/g, '-').toLowerCase() + '.zip')
+  const package_name = spec.name + "_" + weightsFormat + ".zip"
+  await api.exportFile(zipBlob, package_name.replace(/\s+/g, '-').toLowerCase())
   await showMessage('Model package was exported successfully')
 
 }
@@ -354,7 +354,7 @@ class ImJoyPlugin {
 
   async run(ctx) {
     if(!ctx.data || !ctx.data.source){
-      const specUrl = await api.prompt("Please paste the model spec url here", "https://raw.githubusercontent.com/bioimage-io/pytorch-bioimage-io/v0.3.0/specs/models/unet2d_nuclei_broad/UNet2DNucleiBroad.model.yaml")
+      const specUrl = await api.prompt("Please paste the model spec url here", "https://uk1s3.embassy.ebi.ac.uk/public-datasets/bioimage.io/affable-shark/1.1/files/rdf.yaml")
       if(!specUrl) return
       app.modelInfo = {
         name: getFileName(specUrl),
