@@ -131,7 +131,12 @@ async function downloadModel(rootUrl, spec, weightsFormat, showMessage, showProg
     files = files.concat(fs)
     const exportedFs = exportSpec.attachments['files']
     for(let i=0;i<fs.length;i++){
-      exportedFs[i] = getFileName(fs[i])
+      if(typeof fs[i] === 'string'){
+        exportedFs[i] = getFileName(fs[i])
+      }
+      else{
+        exportedFs[i] = getFileName(fs[i].source)
+      }
     }
   }
   if(spec.weights[weightsFormat].attachments && spec.weights[weightsFormat].attachments.files){
@@ -139,7 +144,12 @@ async function downloadModel(rootUrl, spec, weightsFormat, showMessage, showProg
     files = files.concat(fs)
     const exportedFs = exportSpec.weights[weightsFormat].attachments.files
     for(let i=0;i<fs.length;i++){
-      exportedFs[i] = getFileName(fs[i])
+      if(typeof fs[i] === 'string'){
+        exportedFs[i] = getFileName(fs[i])
+      }
+      else{
+        exportedFs[i] = getFileName(fs[i].source)
+      }
     }
   }
   // deprecate this after v0.4.0
