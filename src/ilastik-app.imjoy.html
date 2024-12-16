@@ -139,10 +139,38 @@ async function downloadModel(rootUrl, spec, weightsFormat, showMessage, showProg
       }
     }
   }
+  // for spec after 0.5.0
+  else if(Array.isArray(spec.attachments)){
+    const fs = spec.attachments
+    files = files.concat(fs)
+    const exportedFs = exportSpec.attachments
+    for(let i=0;i<fs.length;i++){
+      if(typeof fs[i] === 'string'){
+        exportedFs[i] = getFileName(fs[i])
+      }
+      else{
+        exportedFs[i] = getFileName(fs[i].source)
+      }
+    }
+  }
   if(spec.weights[weightsFormat].attachments && spec.weights[weightsFormat].attachments.files){
     const fs = spec.weights[weightsFormat].attachments.files
     files = files.concat(fs)
     const exportedFs = exportSpec.weights[weightsFormat].attachments.files
+    for(let i=0;i<fs.length;i++){
+      if(typeof fs[i] === 'string'){
+        exportedFs[i] = getFileName(fs[i])
+      }
+      else{
+        exportedFs[i] = getFileName(fs[i].source)
+      }
+    }
+  }
+  // for spec after 0.5.0
+  else if(Array.isArray(spec.weights[weightsFormat].attachments)){
+    const fs = spec.weights[weightsFormat].attachments
+    files = files.concat(fs)
+    const exportedFs = exportSpec.weights[weightsFormat].attachments
     for(let i=0;i<fs.length;i++){
       if(typeof fs[i] === 'string'){
         exportedFs[i] = getFileName(fs[i])
