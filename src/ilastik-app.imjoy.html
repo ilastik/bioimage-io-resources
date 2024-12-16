@@ -85,6 +85,9 @@ async function resolveUrl(rootUrl, url){
 }
 
 function getFileName(url){
+    if(!url.includes('/')){
+        return url;
+    }
   const parts = url.split('/');
   if(parts[parts.length-1] === "content")
       // Remove the last element 'content'
